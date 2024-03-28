@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-using MyEnum;
+
 using static Unity.VisualScripting.Antlr3.Runtime.Tree.TreeWizard;
 
 public static class CalcManager

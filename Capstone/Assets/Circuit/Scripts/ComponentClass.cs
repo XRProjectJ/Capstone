@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class ComponentClass : MonoBehaviour
 {
-    public Attachment[] attachment = new Attachment[2];
+    public PlusAttachment plus;
+    public MinusAttachment minus;
     [SerializeField] protected double R;
     [SerializeField] protected double V;
     [SerializeField] protected double I;
+    private bool visit = false;
 
     public virtual void Do()
     {
@@ -26,6 +28,11 @@ public class ComponentClass : MonoBehaviour
     {  
         this.I = I;
     }
+    public void SetVisit(bool visit)
+    {
+        this.visit = visit;
+    }
+
     public double GetR()
     {
         return this.R;
@@ -38,8 +45,13 @@ public class ComponentClass : MonoBehaviour
     { 
         return this.I;
     }
+    public bool GetVisit()
+    {
+        return visit;
+    }
     public virtual bool IsLine()
     {
         return false;
     }
+    
 }
