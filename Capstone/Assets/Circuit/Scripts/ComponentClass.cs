@@ -7,9 +7,9 @@ public class ComponentClass : MonoBehaviour
 {
     public PlusAttachment plus;
     public MinusAttachment minus;
-    [SerializeField] protected double R;
-    [SerializeField] protected double V;
-    [SerializeField] protected double I;
+    [SerializeField] protected double R = 0;
+    [SerializeField] protected double V = 0;
+    [SerializeField] protected double I = 0;
     private bool visit = false;
 
     public virtual void Do()

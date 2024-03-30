@@ -6,6 +6,8 @@ public class PlusAttachment : Attachment
 {
     public List<MinusAttachment> links = new List<MinusAttachment>();
     [SerializeField] protected MinusAttachment pair;
+    protected bool isEndOfParallel = false;
+    protected bool isStartOfParallel = false;
     private void OnTriggerEnter(Collider other)
     {
         GameObject obj = other.gameObject;
@@ -17,7 +19,7 @@ public class PlusAttachment : Attachment
         linkSize++;
         if (linkSize > 1)
         {
-            isParallel = true;
+            isStartOfParallel = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -31,11 +33,28 @@ public class PlusAttachment : Attachment
         linkSize--;
         if (linkSize <= 1)
         {
-            isParallel = false;
+            isStartOfParallel = false;
+            isEndOfParallel = false;
         }
     }
     public MinusAttachment GetPair()
     {
         return pair;
+    }
+    public bool GetIsEndOfParallel()
+    {
+        return isEndOfParallel;
+    }
+    public void SetIsEndOfParallel(bool value)
+    {
+        isEndOfParallel = value;
+    }
+    public bool GetIsStartOfParallel()
+    {
+        return isStartOfParallel;
+    }
+    public void SetIsStartOfParallel(bool value)
+    {
+        isStartOfParallel = value;
     }
 }

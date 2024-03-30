@@ -6,6 +6,7 @@ public class MinusAttachment : Attachment
 {
     public List<PlusAttachment> links = new List<PlusAttachment>();
     [SerializeField] protected PlusAttachment pair;
+   
     private void OnTriggerEnter(Collider other)
     {
         GameObject obj = other.gameObject;
@@ -15,9 +16,13 @@ public class MinusAttachment : Attachment
         }
         links.Add(obj.GetComponent<PlusAttachment>());
         linkSize++;
+        
         if (linkSize > 1)
         {
-            isParallel = true;
+            for (int i = 0; i < links.Count; i++)
+            {
+                links[i].GetComponent<PlusAttachment>().SetIsEndOfParallel(true);
+            }
         }
     }
     private void OnTriggerExit(Collider other)
@@ -28,14 +33,12 @@ public class MinusAttachment : Attachment
             return;
         }
         links.Remove(obj.GetComponent<PlusAttachment>());
+        obj.GetComponent<PlusAttachment>().SetIsEndOfParallel(false);
         linkSize--;
-        if (linkSize <= 1)
-        {
-            isParallel = false;
-        }
     }
     public PlusAttachment GetPair()
     {
         return pair;
     }
+    
 }
