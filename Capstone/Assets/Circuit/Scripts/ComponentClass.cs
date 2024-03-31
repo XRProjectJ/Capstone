@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
+// 모든 부품 클래스의 최상위 클래스
 public class ComponentClass : MonoBehaviour
 {
+    // 모든 부품은 + 극과 - 극에 다른 부품이 연결됨 
     public PlusAttachment plus;
     public MinusAttachment minus;
+    // 저항, 전압, 전류
     [SerializeField] protected double R = 0;
     [SerializeField] protected double V = 0;
     [SerializeField] protected double I = 0;
+    // 순회 시 방문을 했는지 확인하기 위한 변수
     private bool visit = false;
 
+    // 부품별 동작을 구현할 함수
     public virtual void Do()
     {
 
     }
+    // 전선인지 아닌지를 판별하는 함수 (24.04.01 기준 사용안함)
+    public virtual bool IsLine()
+    {
+        return false;
+    }
+    // Getter, Setter
     public void SetR(double R)
     {
         this.R = R;
@@ -49,9 +60,6 @@ public class ComponentClass : MonoBehaviour
     {
         return visit;
     }
-    public virtual bool IsLine()
-    {
-        return false;
-    }
+
     
 }
