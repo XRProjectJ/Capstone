@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// 순회를 담당하는 스크립트
+// 순회를 담당하는 스크립트 (24.04.03 기준 에러가 발생 - 원인 : 인덱스 에러)
 public class CircuitManager : MonoBehaviour
 {
     // 병렬과 직렬 부분을 나누어서 각 저항,전압,전류를 저장하고 이를 다 더해서 회로의 전체 저항, 전압, 전류를 구하려고함
@@ -11,6 +11,8 @@ public class CircuitManager : MonoBehaviour
     private List<double> R = new List<double>();
     private List<double> V = new List<double>();
     private List<double> I = new List<double>();
+
+    [SerializeField] private ComponentClass root;
 
     // 회로의 전체 저항을 구하는 함수 (순환 호출로 순회)
     public double calcR(ComponentClass root, ComponentClass node, List<double> nextOfParallelR, ref bool success)
@@ -61,6 +63,7 @@ public class CircuitManager : MonoBehaviour
         else if(node.GetVisit() != visit)
         {
             node.SetVisit(visit);
+            Debug.Log(node.transform.name);
             return node.GetR() + calcR(root, node.plus.links[0].GetComponent(), nextOfParallelR, ref success);
         }
         // 지금 부품이 이미 방문한 부품일 때
@@ -69,5 +72,16 @@ public class CircuitManager : MonoBehaviour
             return 0;
         }
 
+    }
+    public void circuit(ComponentClass root)
+    {
+        bool success = true;
+        List<double> listR = new List<double>();
+        double r = calcR(root, root,listR, ref success);
+        Debug.Log(r);
+    }
+    private void Start()
+    {
+        circuit(root);
     }
 }

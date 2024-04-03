@@ -25,6 +25,7 @@ public class PlusAttachment : Attachment
         {
             return;
         }
+        Debug.Log("????");
         links.Add(obj.GetComponent<MinusAttachment>());
         linkSize++;
         // + 극에 여러 - 극이 달라붙었다면 병렬을 의미

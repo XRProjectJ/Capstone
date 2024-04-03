@@ -12,7 +12,7 @@ public class DrawLine : MonoBehaviour
     void Start()
     {
         lineRenderer.SetWidth(0.05f, 0.05f);
-        lineRenderer.SetColors(new Color(1f, 0f, 0f), new Color(1f, 0f, 0f));
+        
     }
     private void Draw()
     {
