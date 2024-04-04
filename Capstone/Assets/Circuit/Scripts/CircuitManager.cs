@@ -11,6 +11,8 @@ public class CircuitManager : MonoBehaviour
     private List<double> R = new List<double>();
     private List<double> V = new List<double>();
     private List<double> I = new List<double>();
+    double timer = 0;
+    bool first = false;
 
     [SerializeField] private ComponentClass root;
 
@@ -64,6 +66,7 @@ public class CircuitManager : MonoBehaviour
         {
             node.SetVisit(visit);
             Debug.Log(node.transform.name);
+            Debug.Log("로그: "+node.plus.links[0]);
             return node.GetR() + calcR(root, node.plus.links[0].GetComponent(), nextOfParallelR, ref success);
         }
         // 지금 부품이 이미 방문한 부품일 때
@@ -80,8 +83,19 @@ public class CircuitManager : MonoBehaviour
         double r = calcR(root, root,listR, ref success);
         Debug.Log(r);
     }
-    private void Start()
+    void Start()
     {
-        circuit(root);
+        //circuit(root);
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer >= 1.0 && first == false)
+        {
+            circuit(root);
+            first = true;
+        }
+        
     }
 }
