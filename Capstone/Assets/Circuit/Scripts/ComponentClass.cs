@@ -10,9 +10,12 @@ public class ComponentClass : MonoBehaviour
     public PlusAttachment plus;
     public MinusAttachment minus;
     // 저항, 전압, 전류
-    [SerializeField] protected double R = 0;
+    /*[SerializeField] protected double R = 0;
     [SerializeField] protected double V = 0;
-    [SerializeField] protected double I = 0;
+    [SerializeField] protected double I = 0;*/
+    public double R = 0;
+    public double V = 0;
+    public double I = 0;
     // 순회 시 방문을 했는지 확인하기 위한 변수
     private bool visit = false;
 
