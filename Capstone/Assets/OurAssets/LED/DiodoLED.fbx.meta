@@ -3,7 +3,87 @@ guid: f17a1e56a05ecfe4693e50a4c2cde1e4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bulb White
+    second: {fileID: 2100000, guid: 5cf3402672b09c045933aba4c85c1ee4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bulb_Blue
+    second: {fileID: 2100000, guid: 493cf1fa3994ac14f96e3bae112108bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bulb_Green
+    second: {fileID: 2100000, guid: ae6393afa6b6ddb4697ae6feee91234d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bulb_Orange
+    second: {fileID: 2100000, guid: cc3fd53fbc415cf4f8fca7f527f79dbd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bulb_Red
+    second: {fileID: 2100000, guid: 312998842b4f7434bbb9616cea487ee7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bulb_Yellow
+    second: {fileID: 2100000, guid: 050aff5741e060441a27703bb0d4b197, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 5a570669a1929084bab99aff5ced686f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 974fa0b699d79a6489bf6840f1899367, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor
+    second: {fileID: 2100000, guid: 071dd3fb7c2d9ba4498e81a771611ff2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor.001
+    second: {fileID: 2100000, guid: 5eef4faccf11fa346a30d5bb6c3bd9be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor.002
+    second: {fileID: 2100000, guid: 7eb099deddd9ea34abc2f5966d2d46f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor.003
+    second: {fileID: 2100000, guid: 0a1455b80aeecc447bf777d781e1b5cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor.004
+    second: {fileID: 2100000, guid: 7c2771dbe68a3204db52d66a40bef309, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor.005
+    second: {fileID: 2100000, guid: 5e070da6bb5945b4b9b307c0aad34d13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Semiconductor.006
+    second: {fileID: 2100000, guid: ed0aa8107075e8c43b75774a915381bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wire
+    second: {fileID: 2100000, guid: 09073bcdf40bc8543bc4de457b9acaec, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
