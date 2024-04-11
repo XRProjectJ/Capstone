@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LED : ComponentClass
 {
+    public GameObject material;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +17,7 @@ public class LED : ComponentClass
     {
         
     }
-
+    
      public override void Do()
     {
         /*// off된 led 에셋을 찾음
@@ -30,12 +32,13 @@ public class LED : ComponentClass
         // on된 led를 활성화
         onLed.SetActive(true);*/
 
-      
+        
        
-        if(material != null)
+
+        if (material != null)
         {
-           
-            material.color = Color.black; 
+
+            material.GetComponent<Renderer>().material.color = new Color(0.0f, 0.0f, 0.0f);
         }
         else
         {
