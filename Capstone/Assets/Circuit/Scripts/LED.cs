@@ -18,7 +18,7 @@ public class LED : ComponentClass
 
      public override void Do()
     {
-        // off된 led 에셋을 찾음
+        /*// off된 led 에셋을 찾음
         GameObject offLed = GameObject.Find("LED Red");
 
         // on된 led 에셋을 찾음
@@ -28,7 +28,20 @@ public class LED : ComponentClass
         offLed.SetActive(false);
 
         // on된 led를 활성화
-        onLed.SetActive(true);
+        onLed.SetActive(true);*/
+
+      
+       
+        if(material != null)
+        {
+           
+            material.color = Color.black; 
+        }
+        else
+        {
+            Debug.LogWarning("Component_diode에 Material이 할당되지 않았습니다.");
+        }
+    
     }
 
 
