@@ -52,7 +52,7 @@ MonoBehaviour:
   R: 5
   V: 0
   I: 0
-  material: {fileID: 0}
+  material: {fileID: 2518891685867812529}
 --- !u!1 &1659174528771498906
 GameObject:
   m_ObjectHideFlags: 0
