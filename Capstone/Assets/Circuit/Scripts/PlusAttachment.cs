@@ -11,11 +11,11 @@ public class PlusAttachment : Attachment
     // 해당 객체를 가진 부품의 - 극을 저장 (24.04.01 기준 사용안함)
     [SerializeField] protected MinusAttachment pair;
     // 병렬의 끝인지 저장
-    protected bool isEndOfParallel = false;
+    public bool isEndOfParallel = false;
     // 병렬의 시작인지 저장
-    protected bool isStartOfParallel = false;
+    public bool isStartOfParallel = false;
     // 병렬의 끝이라면 병렬의 끝이 어디로 이어지는 지 저장
-    protected MinusAttachment endOfParallelLink = null;
+    public MinusAttachment endOfParallelLink = null;
 
 
     private void OnTriggerEnter(Collider other)

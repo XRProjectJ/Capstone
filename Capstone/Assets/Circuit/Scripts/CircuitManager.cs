@@ -17,7 +17,6 @@ public class CircuitManager : MonoBehaviour
     private List<ParallelR> parallelRs = new List<ParallelR>();
     double timer = 0;
     bool first = false;
-
     [SerializeField] private ComponentClass root;
     [SerializeField] private GameObject startComponent;
 
@@ -374,13 +373,25 @@ public class CircuitManager : MonoBehaviour
         ComponentClass result = root;
         Debug.Log("findStartingPoint Ω√¿€");
         ComponentClass parallel = root.plus.links[0].GetComponent();
-        int i = 0;
+        Stack<PlusAttachment> parallelComponent = new Stack<PlusAttachment>();
+        bool stackUse = false;
         while (parallel != root && parallel != null)
         {
-            Debug.Log("??? : " + i);
-            i++;
+            
             if (parallel.plus.GetIsEndOfParallel())
             {
+                if(parallelComponent.Count > 0)
+                {
+                    parallelComponent.Pop();
+                    stackUse = true;
+                }
+            }
+            else if (parallel.plus.GetIsStartOfParallel())
+            {
+                parallelComponent.Push(parallel.plus);
+                stackUse = true;
+            }
+            if(stackUse && parallelComponent.Count <= 0) {
                 result = createStartingComponent(parallel, parallel.plus.links[0].GetComponent());
                 break;
             }
