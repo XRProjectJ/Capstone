@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,12 +8,6 @@ using UnityEngine;
 
 public class CircuitManager : MonoBehaviour
 {
-    // 병렬과 직렬 부분을 나누어서 각 저항,전압,전류를 저장하고 이를 다 더해서 회로의 전체 저항, 전압, 전류를 구하려고함
-    // (24.04.01 기준 사용안함)
-    /*    private List<double> R = new List<double>();
-        private List<double> V = new List<double>();
-        private List<double> I = new List<double>();*/
-
     struct ParallelR
     {
         public double R;
@@ -24,6 +19,8 @@ public class CircuitManager : MonoBehaviour
     bool first = false;
 
     [SerializeField] private ComponentClass root;
+    [SerializeField] private GameObject startComponent;
+
 
     // 회로의 전체 저항을 구하는 함수 (순환 호출로 순회)
     // 첫번째 매개변수 : 순회를 시작한 부품
@@ -33,7 +30,6 @@ public class CircuitManager : MonoBehaviour
     // 다섯번째 매개변수 : 현재 부품이 방문했으면 이 매개변수의 값을 visit 으로 가지고 있어야함 (방문 여부가 아님)
     public double calcEntireR(ComponentClass root, ComponentClass node, ref ComponentClass nextOfParallel, ref bool success, bool visit)
     {
-        //Debug.Log(node.transform.name);
         if (success == false)
         {
             return 0;
@@ -41,6 +37,7 @@ public class CircuitManager : MonoBehaviour
         // 회로가 중간에 끊겨있는 경우
         if (node.plus.links.Count <= 0)
         {
+            Debug.Log(node.transform.parent.transform.name);
             success = false;
             return 0;
         }
@@ -102,16 +99,14 @@ public class CircuitManager : MonoBehaviour
 
 
     }
-
     //회로의 전체 전압 구하는 함수
     // 첫번째 매개변수 : 순회를 시작한 부품
     // 두번째 매개변수 : 현재 순회중인 부품
     // 세번째 매개변수 : 병렬 이후의 전압값들
     // 네번째 매개변수 : 순회의 성공 여부
     // 다섯번째 매개변수 : 현재 부품이 방문했으면 이 매개변수의 값을 visit 으로 가지고 있어야함 (방문 여부가 아님)
-    public double calcEntireV(ComponentClass root, ComponentClass node, List<double> nextOfParallelV, ref bool success, bool visit)
+    public double calcEntireV(ComponentClass root, ComponentClass node, ref ComponentClass nextOfParallel, ref bool success, bool visit)
     {
-        //Debug.Log(node.transform.name);
         if (success == false)
         {
             return 0;
@@ -119,6 +114,7 @@ public class CircuitManager : MonoBehaviour
         // 회로가 중간에 끊겨있는 경우
         if (node.plus.links.Count <= 0)
         {
+            Debug.Log(node.transform.parent.transform.name);
             success = false;
             return 0;
         }
@@ -130,16 +126,17 @@ public class CircuitManager : MonoBehaviour
         }
         double result = 0;
         // 지금 부품이 이미 방문한 부품일 때
-        if (node.GetVisit() == visit) 
-        { 
+        if (node.GetVisit() == visit)
+        {
             return 0;
         }
         // 지금 부품이 병렬의 끝일 때
         else if (node.plus.GetIsEndOfParallel())
-        {  
-            // 병렬 이후의 값을 구함 -> 따로 저장하는 이유는 병렬의 전압값에 직렬 전압 값이 섞이면 안되기 때문 
-            nextOfParallelV.Add(calcEntireV(root, node.plus.GetEndOfParallelLink().GetComponent(), nextOfParallelV, ref success, visit));
+        {
             node.SetVisit(visit);
+
+            nextOfParallel = node.plus.links[0].GetComponent();
+
             // 자신의 값을 리턴
             result = node.GetV();
             return result;
@@ -147,41 +144,39 @@ public class CircuitManager : MonoBehaviour
         // 지금 부품이 병렬의 시작일 때
         if (node.plus.GetIsStartOfParallel())
         {
-            // 모든 병렬 연결의 가장 큰 전압을 저장
+            node.SetVisit(visit);
+            // 병렬 연결의 내부의 전압 값
             double maxV = 0;
-
-            for (int i = 0; i < node.plus.links.Count; i++)
-            {
-                double tmp = calcEntireV(root, node.plus.links[i].GetComponent(), nextOfParallelV, ref success, visit);
-                if(tmp > maxV)
-                {
-                    maxV = tmp;
-                }
-            }
             // 병렬 연결 이후의 값을 전부 저장
             double totalV = 0;
-
-            // 병렬 연결 이후의 값을 전부 더함
-            for (int i = 0; i < nextOfParallelV.Count; i++)
+            for (int i = 0; i < node.plus.links.Count; i++)
             {
-                totalV += nextOfParallelV[i];
+
+                double tmpV = calcEntireV(root, node.plus.links[i].GetComponent(), ref nextOfParallel, ref success, visit);
+                if(tmpV > maxV)
+                {
+                    maxV = tmpV;
+                }
             }
-            nextOfParallelV.Clear();
-            node.SetVisit(visit);
-            result = node.GetV() + totalV+maxV;
+
+            // 병렬 내부를 전부 순회 했으면 병렬 외부의 순회를 다시 진행
+            totalV = calcEntireV(root, nextOfParallel, ref nextOfParallel, ref success, visit);
+
+            result = node.GetV() + maxV + totalV;
             return result;
         }
         // 지금 부품이 직렬 연결이면서 방문하지 않은 부품일 때 (병렬 내부는 직렬과 같음)
         else
-        {         
+        {
             node.SetVisit(visit);
 
-            result = node.GetV() + calcEntireV(root, node.plus.links[0].GetComponent(), nextOfParallelV, ref success, visit);
+            result = node.GetV() + calcEntireV(root, node.plus.links[0].GetComponent(), ref nextOfParallel, ref success, visit);
             return result;
         }
 
 
     }
+
     // 병렬 내부의 직렬(가지)의 저항의 합을 계산 (순환호출)
     private double calcRSerialInParallel(ComponentClass node)
     {
@@ -315,7 +310,6 @@ public class CircuitManager : MonoBehaviour
         double i = 0;
         // 방문을 했는지 확인하기 위한 값 : true, false 로 고정되어 있다면 순회마다 매번 초기화 시켜줘야함
         bool visit = !root.GetVisit();
-        //r = calcEntireR(root, root,listR, ref success, visit);
         r = calcEntireR(root, root, ref next, ref success, visit);
         
         if (success)
@@ -330,7 +324,8 @@ public class CircuitManager : MonoBehaviour
         
         visit = !root.GetVisit();
         success = true;
-        v = calcEntireV(root, root, listV, ref success, visit);
+        next = null;
+        v = calcEntireV(root, root, ref next, ref success, visit);
         if (success)
         {
             Debug.Log("전체 전압 : " + v);
@@ -348,8 +343,58 @@ public class CircuitManager : MonoBehaviour
         parallelRs.Clear();
         return success;
 
-        
+    }
 
+    // 순회 할 시작점을 만들어줌 (회로에는 보이지 않으나 코드상에 논리적으로 존재)
+    ComponentClass createStartingComponent(ComponentClass parallel, ComponentClass next)
+    {
+        Debug.Log("createStartingComponent 시작");
+        ComponentClass start = Instantiate(startComponent).GetComponent<ComponentClass>();
+        start.transform.name = "start";
+        ComponentClass receive = Instantiate(startComponent).GetComponent<ComponentClass>();
+        receive.transform.name = "receive";
+        ComponentClass give = Instantiate(startComponent).GetComponent<ComponentClass>();
+        give.transform.name = "give";
+
+        start.minus.links.Add(receive.plus);
+        start.plus.links.Add(give.minus);
+
+        receive.minus.links.Add(parallel.plus);
+        give.plus.links.Add(next.minus);
+
+        Debug.Log("parallel : "+parallel.transform.parent.transform.name);
+        Debug.Log("next : " + next.transform.parent.transform.name);
+
+        return start;
+
+    }
+    // 순회를 시작할 지점을 자동으로 찾아줌 (마땅한게 없으면 자체적으로 생성)
+    ComponentClass findStartingPoint(ComponentClass root)
+    {
+        ComponentClass result = root;
+        Debug.Log("findStartingPoint 시작");
+        ComponentClass parallel = root.plus.links[0].GetComponent();
+        int i = 0;
+        while (parallel != root && parallel != null)
+        {
+            Debug.Log("??? : " + i);
+            i++;
+            if (parallel.plus.GetIsEndOfParallel())
+            {
+                result = createStartingComponent(parallel, parallel.plus.links[0].GetComponent());
+                break;
+            }
+            parallel = parallel.plus.links[0].GetComponent();
+            
+        }
+        
+        return result;
+    }
+    void calc()
+    {
+        Debug.Log("calc 시작");
+        ComponentClass start = findStartingPoint(root);
+        circuit(start);
     }
     void Start()
     {
@@ -362,102 +407,88 @@ public class CircuitManager : MonoBehaviour
         if(timer >= 1.0 && first == false)
         {
             first = true;
-            circuit(root);
-            
+            calc();
+            //circuit(root);
         }
         
     }
+    //회로의 전체 전압 구하는 함수 (24.04.29 기준 안씀)
+    // 첫번째 매개변수 : 순회를 시작한 부품
+    // 두번째 매개변수 : 현재 순회중인 부품
+    // 세번째 매개변수 : 병렬 이후의 전압값들
+    // 네번째 매개변수 : 순회의 성공 여부
+    // 다섯번째 매개변수 : 현재 부품이 방문했으면 이 매개변수의 값을 visit 으로 가지고 있어야함 (방문 여부가 아님)
+    /* public double calcEntireV(ComponentClass root, ComponentClass node, List<double> nextOfParallelV, ref bool success, bool visit)
+     {
+         //Debug.Log(node.transform.name);
+         if (success == false)
+         {
+             return 0;
+         }
+         // 회로가 중간에 끊겨있는 경우
+         if (node.plus.links.Count <= 0)
+         {
+             success = false;
+             return 0;
+         }
+
+         // 순회를 모두 성공적으로 마쳤을 때
+         if (node == root && node.GetVisit() == visit)
+         {
+             return 0;
+         }
+         double result = 0;
+         // 지금 부품이 이미 방문한 부품일 때
+         if (node.GetVisit() == visit) 
+         { 
+             return 0;
+         }
+         // 지금 부품이 병렬의 끝일 때
+         else if (node.plus.GetIsEndOfParallel())
+         {  
+             // 병렬 이후의 값을 구함 -> 따로 저장하는 이유는 병렬의 전압값에 직렬 전압 값이 섞이면 안되기 때문 
+             nextOfParallelV.Add(calcEntireV(root, node.plus.GetEndOfParallelLink().GetComponent(), nextOfParallelV, ref success, visit));
+             node.SetVisit(visit);
+             // 자신의 값을 리턴
+             result = node.GetV();
+             return result;
+         }
+         // 지금 부품이 병렬의 시작일 때
+         if (node.plus.GetIsStartOfParallel())
+         {
+             // 모든 병렬 연결의 가장 큰 전압을 저장
+             double maxV = 0;
+
+             for (int i = 0; i < node.plus.links.Count; i++)
+             {
+                 double tmp = calcEntireV(root, node.plus.links[i].GetComponent(), nextOfParallelV, ref success, visit);
+                 if(tmp > maxV)
+                 {
+                     maxV = tmp;
+                 }
+             }
+             // 병렬 연결 이후의 값을 전부 저장
+             double totalV = 0;
+
+             // 병렬 연결 이후의 값을 전부 더함
+             for (int i = 0; i < nextOfParallelV.Count; i++)
+             {
+                 totalV += nextOfParallelV[i];
+             }
+             nextOfParallelV.Clear();
+             node.SetVisit(visit);
+             result = node.GetV() + totalV+maxV;
+             return result;
+         }
+         // 지금 부품이 직렬 연결이면서 방문하지 않은 부품일 때 (병렬 내부는 직렬과 같음)
+         else
+         {         
+             node.SetVisit(visit);
+
+             result = node.GetV() + calcEntireV(root, node.plus.links[0].GetComponent(), nextOfParallelV, ref success, visit);
+             return result;
+         }
 
 
-    // 회로의 전체 저항을 구하는 함수 (순환 호출로 순회) : 24.04.28 기준 쓰이지 않고 있음
-    public double calcEntireR(ComponentClass root, ComponentClass node, List<double> nextOfParallelR, ref bool success, bool visit)
-    {
-        //Debug.Log(node.transform.name);
-        if (success == false)
-        {
-            return 0;
-        }
-        // 회로가 중간에 끊겨있는 경우
-        if (node.plus.links.Count <= 0)
-        {
-            success = false;
-            return 0;
-        }
-
-        // 순회를 모두 성공적으로 마쳤을 때
-        if (node == root && node.GetVisit() == visit)
-        {
-            //success = true;
-            return 0;
-        }
-        double result = 0;
-        // 지금 부품이 이미 방문한 부품일 때
-        if (node.GetVisit() == visit)
-        {
-            //Debug.Log("이미 방문");
-            return 0;
-        }
-        // 지금 부품이 병렬의 끝일 때
-        else if (node.plus.GetIsEndOfParallel())
-        {
-            //Debug.Log("병렬 끝");
-            node.SetVisit(visit);
-            // 병렬 이후의 값을 구함 -> 따로 저장하는 이유는 병렬의 저항값에 직렬 저항 값이 섞이면 안되기 때문 
-            nextOfParallelR.Add(calcEntireR(root, node.plus.GetEndOfParallelLink().GetComponent(), nextOfParallelR, ref success, visit));
-
-            // 자신의 값을 리턴
-            result = node.GetR();
-            /*Debug.Log(node.transform.name);
-            Debug.Log("이제까지 구한 저항 : " + result);*/
-            return result;
-            //return node.GetR();
-        }
-        // 지금 부품이 병렬의 시작일 때
-        if (node.plus.GetIsStartOfParallel())
-        {
-            //Debug.Log("병렬 시작");
-            node.SetVisit(visit);
-            // 모든 병렬 연결의 저항을 저장
-            double sumOfParallelR = 0;
-            // 병렬 연결 이후의 값을 전부 저장
-            double totalR = 0;
-            for (int i = 0; i < node.plus.links.Count; i++)
-            {
-                sumOfParallelR += 1 / calcEntireR(root, node.plus.links[i].GetComponent(), nextOfParallelR, ref success, visit);
-            }
-            // 각 부품의 전압, 전류를 구할 때 사용
-            ParallelR tmp = new ParallelR();
-            tmp.R = 1 / sumOfParallelR;
-            tmp.start = node;
-            parallelRs.Add(tmp);
-            /*            Debug.Log("병렬 연결 저항의 합 : " + 1/sumOfParallelR);*/
-            // 병렬 연결 이후의 값을 전부 더함
-            for (int i = 0; i < nextOfParallelR.Count; i++)
-            {
-                totalR += nextOfParallelR[i];
-            }
-            nextOfParallelR.Clear();
-
-            result = node.GetR() + 1 / sumOfParallelR + totalR;
-            //Debug.Log(node.transform.name);
-            //Debug.Log("이제까지 구한 저항 : " + result);
-            return result;
-            //return node.GetR() + 1 / sumOfParallelR+ totalR;
-        }
-        // 지금 부품이 직렬 연결이면서 방문하지 않은 부품일 때 (병렬 내부는 직렬과 같음)
-        else
-        {
-            //Debug.Log("직렬");
-            node.SetVisit(visit);
-            //Debug.Log("로그: "+node.plus.links[0]);
-
-            result = node.GetR() + calcEntireR(root, node.plus.links[0].GetComponent(), nextOfParallelR, ref success, visit);
-            //Debug.Log(node.transform.name);
-            //Debug.Log("이제까지 구한 저항 : " + result);
-            return result;
-            //return node.GetR() + calcEntireR(root, node.plus.links[0].GetComponent(), nextOfParallelR, ref success, visit);
-        }
-
-
-    }
+     }*/
 }
