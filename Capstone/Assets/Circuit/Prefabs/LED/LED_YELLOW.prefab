@@ -295,6 +295,9 @@ MonoBehaviour:
   component: {fileID: 7637421125887357485}
   links: []
   pair: {fileID: 8254841527675592913}
+  isEndOfParallel: 0
+  isStartOfParallel: 0
+  endOfParallelLink: {fileID: 0}
 --- !u!1 &4685122597665682979
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +492,7 @@ Transform:
   m_GameObject: {fileID: 5697553304109221439}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0012623918, y: 8.5422247e-10, z: 0.000005444889}
+  m_LocalPosition: {x: -0.0012623918, y: 8.5422247e-10, z: 0.00117}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []

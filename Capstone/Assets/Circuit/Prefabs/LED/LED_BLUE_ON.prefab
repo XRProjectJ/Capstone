@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2715713159688066214}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000004656613, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0012623918, y: -5.9604643e-10, z: 0.0000054454804}
+  m_LocalPosition: {x: -0.0012623918, y: -5.9604643e-10, z: 0.00117}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.15000002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -413,6 +413,9 @@ MonoBehaviour:
   component: {fileID: 532702002424691010}
   links: []
   pair: {fileID: 3438430991352792207}
+  isEndOfParallel: 0
+  isStartOfParallel: 0
+  endOfParallelLink: {fileID: 0}
 --- !u!1 &6031906753826492504
 GameObject:
   m_ObjectHideFlags: 0
