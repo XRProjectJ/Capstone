@@ -9,7 +9,8 @@ public class MinusAttachment : Attachment
     public List<PlusAttachment> links = new List<PlusAttachment>();
     // 해당 객체를 가진 부품의 + 극을 저장 (24.04.01 기준 사용안함)
     [SerializeField] protected PlusAttachment pair;
-   
+    public bool isEndOfParallel = false;
+
     private void OnTriggerEnter(Collider other)
     {
         GameObject obj = other.gameObject;
@@ -29,6 +30,7 @@ public class MinusAttachment : Attachment
                 links[i].GetComponent<PlusAttachment>().SetIsEndOfParallel(true);
                 links[i].GetComponent<PlusAttachment>().SetEndOfParallelLink(this);
             }
+            isEndOfParallel = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -43,11 +45,22 @@ public class MinusAttachment : Attachment
         obj.GetComponent<PlusAttachment>().SetIsEndOfParallel(false);
         obj.GetComponent<PlusAttachment>().SetEndOfParallelLink(null);
         linkSize--;
+        if(linkSize < 2)
+        {
+            isEndOfParallel = false;
+        }
     }
     // Getter
     public PlusAttachment GetPair()
     {
         return pair;
     }
-    
+    public bool GetIsEndOfParallel()
+    {
+        return isEndOfParallel;
+    }
+    public void SetIsEndOfParallel(bool value)
+    {
+        isEndOfParallel = value;
+    }
 }

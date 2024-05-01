@@ -16,8 +16,12 @@ public class ComponentClass : MonoBehaviour
     public double R = 0;
     public double V = 0;
     public double I = 0;
+    public double showR = 0;
+    public double showV = 0;
+    public double showI = 0;
     // 순회 시 방문을 했는지 확인하기 위한 변수
-    private bool visit = false;
+    public bool visit = false;
+    public bool findVisit = false;
 
     // 부품별 동작을 구현할 함수
     public virtual void Do()
@@ -46,7 +50,22 @@ public class ComponentClass : MonoBehaviour
     {
         this.visit = visit;
     }
-
+    public void SetShowR(double showR)
+    {
+        this.showR = showR;
+    }
+    public void SetShowV(double showV)
+    {
+        this.showV = showV;
+    }
+    public void SetShowI(double showI) 
+    { 
+        this.showI = showI;
+    }
+    public void SetFindVisit(bool findVisit)
+    {
+        this.findVisit = findVisit;
+    }
     public double GetR()
     {
         return this.R;
@@ -63,6 +82,21 @@ public class ComponentClass : MonoBehaviour
     {
         return visit;
     }
-
+    public double GetShowR()
+    {
+        return showR;
+    }
+    public double GetShowV()
+    {
+        return showV;
+    }
+    public double GetShowI()
+    {
+        return showI;
+    }
+    public bool GetFindVisit()
+    {
+        return findVisit;
+    }
     
 }
