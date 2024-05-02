@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject explainPanel;
     public Button CircuitStartBtn;
     public Button backBtn;
+    public Button CircuitCheckBtn;
 
     public GameObject LED;
     public GameObject Battery;
@@ -87,7 +88,10 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(LED, new Vector3(0, 0, 0), this.transform.rotation);
     }
-
+    public void circuitCheck()
+    {
+        Debug.Log("checking...");
+    }
 
 
     void Start()
@@ -97,15 +101,18 @@ public class GameManager : MonoBehaviour
         explainPanel.SetActive(false);
         circuitPanel.SetActive(false);
 
+
         startBtn.onClick.AddListener(Explain);
         CircuitStartBtn.onClick.AddListener(StartCircuit);
         backBtn.onClick.AddListener(Start);
         ItemBtn.onClick.AddListener(item);
         ItemBox_Pressed.onClick.AddListener(StartCircuit);
 
+
         LEDBtn.onClick.AddListener(createLED);
         BatteryBtn.onClick.AddListener(createBattery);
         MRLineBtn.onClick.AddListener(createLine);
+        CircuitCheckBtn.onClick.AddListener(circuitCheck);
 
 
 }
