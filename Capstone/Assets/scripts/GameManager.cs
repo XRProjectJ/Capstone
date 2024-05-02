@@ -15,8 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject LED;
     public GameObject Battery;
     //public GameObject resister;
-    public GameObject connectorR;
-    public GameObject connectorB;
+    public GameObject MRLine;
 
     public Button ItemBtn;
     public GameObject circuitPanel;
@@ -25,8 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject itemPanel;
     public Button LEDBtn;
     public Button BatteryBtn;
-    public Button connectorBtnR;
-    public Button connectorBtnB;
+    public Button MRLineBtn;
 
 
 
@@ -77,18 +75,40 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void createLine()
+    {
+        Instantiate(MRLine, new Vector3(0, 0, 0), this.transform.rotation);
+    }
+    public void createBattery()
+    {
+        Instantiate(Battery, new Vector3(0,0,0), this.transform.rotation);
+    }
+    public void createLED()
+    {
+        Instantiate(LED, new Vector3(0, 0, 0), this.transform.rotation);
+    }
+
+
+
     void Start()
     {
         state = GameState.Ready;
         startPanel.SetActive(true);
         explainPanel.SetActive(false);
         circuitPanel.SetActive(false);
+
         startBtn.onClick.AddListener(Explain);
         CircuitStartBtn.onClick.AddListener(StartCircuit);
         backBtn.onClick.AddListener(Start);
         ItemBtn.onClick.AddListener(item);
         ItemBox_Pressed.onClick.AddListener(StartCircuit);
-    }
+
+        LEDBtn.onClick.AddListener(createLED);
+        BatteryBtn.onClick.AddListener(createBattery);
+        MRLineBtn.onClick.AddListener(createLine);
+
+
+}
 
 
     void Update()
