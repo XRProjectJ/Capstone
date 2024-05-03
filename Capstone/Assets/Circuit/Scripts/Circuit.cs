@@ -22,110 +22,42 @@ public class Circuit : MonoBehaviour
     [SerializeField] private GameObject startComponent;
     [SerializeField] private Camera cam;
 
-    public double calcParallelR(ComponentClass root, bool visit)
+    public void setPairOfParallel(ComponentClass start)
+    {
+        int count = 0;
+        if (start.plus.GetIsStartOfParallel())
+        {
+            count++;
+        }
+
+    }
+    public void findPairOfParallel(ComponentClass root)
     {
         ComponentClass node = root;
+
+    }
+    public double calcSerialR(ComponentClass root, bool visit)
+    {
         double result = 0;
-        while(!node.plus.GetIsEndOfParallel())
-        {
-            node.SetVisit(visit);
-            if (node.plus.GetIsStartOfParallel() && node.GetVisit() != visit)
-            {
-                for (int i = 0; i < node.plus.links.Count; i++)
-                {
-                    result += 1 / calcParallelR(node.plus.links[i].GetComponent(), visit);
-                }
-
-            }
-            else if(node.GetVisit() != visit)
-            {
-                result += node.GetR();
-            }
-            node = node.plus.links[0].GetComponent();
-        }
-        return result;
-    }
-    public double calcEntireR(ComponentClass root, bool visit, ref bool success)
-    {
-        ComponentClass node = root.plus.links[0].GetComponent();
-        root.SetVisit(visit);
-        double result = root.GetR();
-        while(node != root)
-        {
-            node.SetVisit(visit);
-            if (node.plus.GetIsStartOfParallel() && node.GetVisit() != visit)
-            {
-                for(int i=0; i < node.plus.links.Count; i++)
-                {
-                    result += 1 / calcParallelR(node.plus.links[i].GetComponent(), visit);
-                }
-
-            }
-            else if(node.GetVisit() != visit)
-            {
-                result += node.GetR();
-            }
-            node = node.plus.links[0].GetComponent();
-        }
-        return result;
-    }
-    public double calcParallelV(ComponentClass root, bool visit)
-    {
         ComponentClass node = root;
-        double result = 0;
-        while (!node.plus.GetIsEndOfParallel())
+        node.SetVisit(visit);
+        while (true)
         {
-            node.SetVisit(visit);
-            if (node.plus.GetIsStartOfParallel() && node.GetVisit() != visit)
+            if (node.plus.GetIsStartOfParallel())
             {
-                double max = 0;
-                for (int i = 0; i < node.plus.links.Count; i++)
-                {
-                    double tmp = calcParallelV(node.plus.links[i].GetComponent(), visit);
-                    if (max < tmp)
-                    {
-                        max = tmp;
-                    }
-                }
-                result += max;
+                
             }
-            else if (node.GetVisit() != visit)
-            {
-                result += node.GetV();
-            }
-            node = node.plus.links[0].GetComponent();
+            result += node.GetR();
         }
-        return result;
     }
-    public double calcEntireV(ComponentClass root, bool visit, ref bool success)
+    public ComponentClass calcParallelR(ComponentClass root, bool visit)
     {
-        ComponentClass node = root.plus.links[0].GetComponent();
-        root.SetVisit(visit);
-        double result = root.GetV();
-        while (node != root)
+        double result = 0;
+        ComponentClass node = root;
+        while (true)
         {
-            node.SetVisit(visit);
-            if (node.plus.GetIsStartOfParallel() && node.GetVisit() != visit)
-            {
-                double max = 0;
-                for (int i = 0; i < node.plus.links.Count; i++)
-                {
-                    double tmp = calcParallelV(node.plus.links[i].GetComponent(), visit);
-                    if (max < tmp)
-                    {
-                        max = tmp;
-                    }
-                }
-                result += max;
 
-            }
-            else if (node.GetVisit() != visit)
-            {
-                result += node.GetV();
-            }
-            node = node.plus.links[0].GetComponent();
         }
-        return result;
     }
     // 회로의 각 부품의 전압, 전류, 저항을 초기화 하는 함수 (BFS)
     // 건전지는 전압을 제외하고 전부 0으로 초기화, 그외의 부품은 저항을 제외하고 전부 0으로 초기화
@@ -178,7 +110,7 @@ public class Circuit : MonoBehaviour
         // 방문을 했는지 확인하기 위한 값 : true, false 로 고정되어 있다면 순회마다 매번 초기화 시켜줘야함
         bool visit = !root.GetVisit();
 
-        r = calcEntireR(root,  visit, ref success);
+        //r = calcEntireR(root,  visit, ref success);
 
         if (success)
         {
@@ -192,7 +124,7 @@ public class Circuit : MonoBehaviour
 
         visit = !root.GetVisit();
         next = null;
-        v = calcEntireV(root, visit, ref success);
+       // v = calcEntireV(root, visit, ref success);
         if (success)
         {
             Debug.Log("전체 전압 : " + v);
