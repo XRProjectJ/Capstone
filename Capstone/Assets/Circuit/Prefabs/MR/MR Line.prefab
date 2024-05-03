@@ -163,5 +163,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f25e4cf7e0f7cc44ae1c39412672a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPointName: 
+  spawnPointName: Line Spot
   delayInSeconds: 5
