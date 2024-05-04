@@ -9,6 +9,7 @@ public class ComponentClass : MonoBehaviour
     // 모든 부품은 + 극과 - 극에 다른 부품이 연결됨 
     public PlusAttachment plus;
     public MinusAttachment minus;
+    private ComponentClass rootParallel = null;
     // 저항, 전압, 전류
     /*[SerializeField] protected double R = 0;
     [SerializeField] protected double V = 0;
@@ -66,6 +67,10 @@ public class ComponentClass : MonoBehaviour
     {
         this.findVisit = findVisit;
     }
+    public void SetRootParallel(ComponentClass root)
+    {
+        this.rootParallel = root;
+    }
     public double GetR()
     {
         return this.R;
@@ -98,5 +103,8 @@ public class ComponentClass : MonoBehaviour
     {
         return findVisit;
     }
-    
+    public ComponentClass GetRootParallel()
+    {
+        return rootParallel;
+    }
 }

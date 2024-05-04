@@ -20,44 +20,114 @@ public class Circuit : MonoBehaviour
     private List<ParallelR> parallelRs = new List<ParallelR>();
     //[SerializeField] private ComponentClass root;
     [SerializeField] private GameObject startComponent;
+    [SerializeField] private GameObject parallelComponent;
     [SerializeField] private Camera cam;
 
-    public void setPairOfParallel(ComponentClass start)
+    // 회로의 병렬 부분을 찾고 병렬인 부분을 하나의 저항으로 바꾸는 함수(BFS)
+    public bool findParallel(ComponentClass root)
     {
-        int count = 0;
-        if (start.plus.GetIsStartOfParallel())
+        Queue<ComponentClass> q = new Queue<ComponentClass>();
+        Stack<ComponentClass> startParallel = new Stack<ComponentClass>();
+        Queue<ComponentClass> endParallel = new Queue<ComponentClass>();
+        ComponentClass last = root;
+        bool visit = !root.GetVisit();
+        q.Enqueue(root);
+        root.SetVisit(visit);
+        while(q.Count > 0)
         {
-            count++;
-        }
-
-    }
-    public void findPairOfParallel(ComponentClass root)
-    {
-        ComponentClass node = root;
-
-    }
-    public double calcSerialR(ComponentClass root, bool visit)
-    {
-        double result = 0;
-        ComponentClass node = root;
-        node.SetVisit(visit);
-        while (true)
-        {
-            if (node.plus.GetIsStartOfParallel())
+            ComponentClass cur = q.Dequeue();
+            last = cur;
+            cur.SetVisit(visit);
+            if(cur.plus.GetIsStartOfParallel())
             {
-                
+                startParallel.Push(cur);
             }
-            result += node.GetR();
+            if (cur.minus.GetIsEndOfParallel())
+            {
+                endParallel.Enqueue(cur);
+            }
+            for(int i = 0; i < cur.plus.links.Count; i++)
+            {
+                ComponentClass tmp = cur.plus.links[i].GetComponent();
+                if (tmp.GetVisit() == visit)
+                {
+                    continue;
+                }
+                q.Enqueue(tmp);
+            }
         }
-    }
-    public ComponentClass calcParallelR(ComponentClass root, bool visit)
-    {
-        double result = 0;
-        ComponentClass node = root;
-        while (true)
+        if (!last.plus.links.Contains(root.minus)) {
+            return false;
+        }
+        while (startParallel.Count > 0)
         {
-
+            if (endParallel.Count <= 0)
+            {
+                return false;
+            }
+            ComponentClass start = startParallel.Pop();
+            ComponentClass end = endParallel.Dequeue();
+            createParallelComponent(start, end);
         }
+        if(endParallel.Count > 0)
+        {
+            return false;
+        }
+        return true;
+    }
+    // 병렬을 하나의 저항으로 만드는 함수
+    public void createParallelComponent(ComponentClass start, ComponentClass end)
+    {
+        GameObject parallel = Instantiate(parallelComponent);
+        Parallel node = parallel.GetComponent<Parallel>();
+
+        for(int i = 0; i < start.plus.links.Count; i++)
+        {
+            node.SetInnerStart(start.plus.links[i].GetComponent());
+        }
+        for (int i = 0; i < end.minus.links.Count; i++)
+        {
+            node.SetInnerEnd(end.minus.links[i].GetComponent());
+        }
+        node.minus.links.Add(start.plus);
+        node.plus.links.Add(end.minus);
+
+        start.plus.links.Clear();
+        end.minus.links.Clear();
+        start.plus.links.Add(node.minus);
+        end.minus.links.Add(node.plus);
+    }
+    public double calcEntireR(ComponentClass root , ref bool success)
+    {
+        ComponentClass cur = root.plus.GetComponent();
+        double result = root.GetR();
+        while(cur != root)
+        {
+            if(cur == null)
+            {
+                success = false;
+                return 0;
+            }
+            result += cur.GetR();
+            cur = cur.plus.GetComponent();
+        }
+        return result;
+    }
+    public double calcEntireV(ComponentClass root, ref bool success)
+    {
+        ComponentClass cur = root.plus.GetComponent();
+        double result = root.GetV();
+        while (cur != root)
+        {
+            if (cur == null)
+            {
+                success = false;
+                return 0;
+            }
+            result += cur.GetR();
+            cur = cur.plus.GetComponent();
+        }
+        return result;
     }
     // 회로의 각 부품의 전압, 전류, 저항을 초기화 하는 함수 (BFS)
     // 건전지는 전압을 제외하고 전부 0으로 초기화, 그외의 부품은 저항을 제외하고 전부 0으로 초기화
@@ -110,7 +180,7 @@ public class Circuit : MonoBehaviour
         // 방문을 했는지 확인하기 위한 값 : true, false 로 고정되어 있다면 순회마다 매번 초기화 시켜줘야함
         bool visit = !root.GetVisit();
 
-        //r = calcEntireR(root,  visit, ref success);
+        r = calcEntireR(root, ref success);
 
         if (success)
         {

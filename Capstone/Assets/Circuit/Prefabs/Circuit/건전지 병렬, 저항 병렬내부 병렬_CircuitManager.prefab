@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2250622290402179214}
   m_Layer: 0
   m_Name: "\uAC74\uC804\uC9C0 \uBCD1\uB82C, \uC800\uD56D \uBCD1\uB82C\uB0B4\uBD80
-    \uBCD1\uB82C_\uC0C8\uB85C\uC6B4 \uBC29\uC2DD"
+    \uBCD1\uB82C_CircuitManager"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
