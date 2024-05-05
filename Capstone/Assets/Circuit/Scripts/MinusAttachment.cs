@@ -19,11 +19,10 @@ public class MinusAttachment : Attachment
             return;
         }
         links.Add(obj.GetComponent<PlusAttachment>());
-        linkSize++;
-        
+
         // 여러 부품들이 달라 붙어있는 경우는 병렬임
         // 특히 - 극에 여러 부품이 달라붙어 있는 경우는 병렬이 끝나는 지점을 의미
-        if (linkSize > 1)
+        if (links.Count > 1)
         {
             for (int i = 0; i < links.Count; i++)
             {
@@ -44,8 +43,7 @@ public class MinusAttachment : Attachment
         // 연결이 끊어졌으면 병렬처리된 것들을 전부 병렬이 아니라고 다시 바꿔줘야함
         obj.GetComponent<PlusAttachment>().SetIsEndOfParallel(false);
         obj.GetComponent<PlusAttachment>().SetEndOfParallelLink(null);
-        linkSize--;
-        if(linkSize < 2)
+        if(links.Count < 2)
         {
             isEndOfParallel = false;
         }

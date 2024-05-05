@@ -9,7 +9,12 @@ public class ComponentClass : MonoBehaviour
     // 모든 부품은 + 극과 - 극에 다른 부품이 연결됨 
     public PlusAttachment plus;
     public MinusAttachment minus;
-    private ComponentClass rootParallel = null;
+    // 병렬 내부의 부품일 경우 rootParallel 은 null 이 아니라 대체된 Parallel 부품 (빈 오브젝트)임
+    public ComponentClass rootParallel = null;
+    // 병렬 내부인데 시작점일 경우 병렬의 끝나는 지점을 저장
+    private ComponentClass pairOfStart = null;
+    // 병렬 내부인데 끝점일 경우 병렬의 시작점을 저장
+    private ComponentClass pairOfEnd = null;
     // 저항, 전압, 전류
     /*[SerializeField] protected double R = 0;
     [SerializeField] protected double V = 0;
@@ -29,8 +34,8 @@ public class ComponentClass : MonoBehaviour
     {
 
     }
-    // 전선인지 아닌지를 판별하는 함수 (24.04.01 기준 사용안함)
-    public virtual bool IsLine()
+    // 병렬 부품(빈 오브젝트)인지 아닌지를 판별하는 함수
+    public virtual bool IsParallel()
     {
         return false;
     }
@@ -38,6 +43,14 @@ public class ComponentClass : MonoBehaviour
     public void SetR(double R)
     {
         this.R = R;
+    }
+    public void SetPairOfStart(ComponentClass item)
+    {
+        this.pairOfStart = item;
+    }
+    public void SetPairOfEnd(ComponentClass item)
+    {
+        this.pairOfEnd = item;
     }
     public void SetV(double V)
     {
@@ -106,5 +119,13 @@ public class ComponentClass : MonoBehaviour
     public ComponentClass GetRootParallel()
     {
         return rootParallel;
+    }
+    public ComponentClass GetPairOfStart()
+    {
+        return pairOfStart;
+    }
+    public ComponentClass GetPairOfEnd()
+    {
+        return pairOfEnd;
     }
 }

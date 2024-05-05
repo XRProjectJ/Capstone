@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -11,75 +12,85 @@ using UnityEngine;
 
 public class Circuit : MonoBehaviour
 {
-    struct ParallelR
+    struct ParallelPair
     {
-        public double R;
         public ComponentClass start;
+        public ComponentClass end;
     };
-    // 각 부품의 전압, 전류를 구할 때 사용
-    private List<ParallelR> parallelRs = new List<ParallelR>();
     //[SerializeField] private ComponentClass root;
     [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
     [SerializeField] private Camera cam;
 
-    // 회로의 병렬 부분을 찾고 병렬인 부분을 하나의 저항으로 바꾸는 함수(BFS)
+    public void findPair(ComponentClass start)
+    {
+        ComponentClass node = start.plus.links[0].GetComponent();
+        while (true)
+        {
+            if(node == null || node == start)
+            {
+                break;
+            }
+            if(node.minus.GetIsEndOfParallel() && node.GetPairOfEnd() == null)
+            {
+                start.SetPairOfStart(node);
+                node.SetPairOfEnd(start);
+                break;
+            }
+            node = node.plus.links[0].GetComponent();
+        }
+    }
+    // 회로의 병렬 부분을 찾고 병렬인 부분을 하나의 저항으로 바꾸는 함수 (DFS)
     public bool findParallel(ComponentClass root)
     {
-        Queue<ComponentClass> q = new Queue<ComponentClass>();
+        Debug.Log("findParallel 시작");
+        Stack<ComponentClass> s = new Stack<ComponentClass>();
         Stack<ComponentClass> startParallel = new Stack<ComponentClass>();
-        Queue<ComponentClass> endParallel = new Queue<ComponentClass>();
-        ComponentClass last = root;
+        List<ParallelPair> pairs = new List<ParallelPair>();
         bool visit = !root.GetVisit();
-        q.Enqueue(root);
+        s.Push(root);
         root.SetVisit(visit);
-        while(q.Count > 0)
+        while (s.Count > 0)
         {
-            ComponentClass cur = q.Dequeue();
-            last = cur;
-            cur.SetVisit(visit);
-            if(cur.plus.GetIsStartOfParallel())
+            ComponentClass cur = s.Pop();
+            if (cur.plus.GetIsStartOfParallel())
             {
                 startParallel.Push(cur);
             }
-            if (cur.minus.GetIsEndOfParallel())
-            {
-                endParallel.Enqueue(cur);
-            }
-            for(int i = 0; i < cur.plus.links.Count; i++)
+            for (int i = 0; i < cur.plus.links.Count; i++)
             {
                 ComponentClass tmp = cur.plus.links[i].GetComponent();
-                if (tmp.GetVisit() == visit)
+                if (tmp.GetVisit() != visit)
                 {
-                    continue;
+                    tmp.SetVisit(visit);
+                    s.Push(tmp);
                 }
-                q.Enqueue(tmp);
             }
         }
-        if (!last.plus.links.Contains(root.minus)) {
-            return false;
-        }
-        while (startParallel.Count > 0)
+        while(startParallel.Count > 0)
         {
-            if (endParallel.Count <= 0)
-            {
-                return false;
-            }
-            ComponentClass start = startParallel.Pop();
-            ComponentClass end = endParallel.Dequeue();
+            ComponentClass tmp = startParallel.Pop();
+            findPair(tmp);
+            ParallelPair pair = new ParallelPair();
+            pair.start = tmp;
+            pair.end = tmp.GetPairOfStart();
+            pairs.Add(pair);
+        }
+        for(int i=0; i < pairs.Count; i++)
+        {
+            ComponentClass start = pairs[i].start;
+            ComponentClass end = pairs[i].end;
             createParallelComponent(start, end);
-        }
-        if(endParallel.Count > 0)
-        {
-            return false;
         }
         return true;
     }
     // 병렬을 하나의 저항으로 만드는 함수
     public void createParallelComponent(ComponentClass start, ComponentClass end)
     {
+        Debug.Log("createParallelComponent 시작");
         GameObject parallel = Instantiate(parallelComponent);
         Parallel node = parallel.GetComponent<Parallel>();
+        ComponentClass nodeComponent = parallel.GetComponent<ComponentClass>();
 
         for(int i = 0; i < start.plus.links.Count; i++)
         {
@@ -89,17 +100,24 @@ public class Circuit : MonoBehaviour
         {
             node.SetInnerEnd(end.minus.links[i].GetComponent());
         }
+        
         node.minus.links.Add(start.plus);
         node.plus.links.Add(end.minus);
 
         start.plus.links.Clear();
         end.minus.links.Clear();
-        start.plus.links.Add(node.minus);
-        end.minus.links.Add(node.plus);
+
+
+        start.plus.links.Add(nodeComponent.minus);
+        end.minus.links.Add(nodeComponent.plus);
+
+        node.SetRoot();
+        node.calcR();
+        node.calcV();
     }
     public double calcEntireR(ComponentClass root , ref bool success)
     {
-        ComponentClass cur = root.plus.GetComponent();
+        ComponentClass cur = root.plus.links[0].GetComponent();
         double result = root.GetR();
         while(cur != root)
         {
@@ -109,13 +127,13 @@ public class Circuit : MonoBehaviour
                 return 0;
             }
             result += cur.GetR();
-            cur = cur.plus.GetComponent();
+            cur = cur.plus.links[0].GetComponent();
         }
         return result;
     }
     public double calcEntireV(ComponentClass root, ref bool success)
     {
-        ComponentClass cur = root.plus.GetComponent();
+        ComponentClass cur = root.plus.links[0].GetComponent();
         double result = root.GetV();
         while (cur != root)
         {
@@ -124,10 +142,64 @@ public class Circuit : MonoBehaviour
                 success = false;
                 return 0;
             }
-            result += cur.GetR();
-            cur = cur.plus.GetComponent();
+            result += cur.GetV();
+            cur = cur.plus.links[0].GetComponent();
         }
         return result;
+    }
+    public void calcComponent(ComponentClass root, double entireR, double entireV)
+    {
+        Debug.Log("calcComponent 시작");
+        Queue<ComponentClass> q = new Queue<ComponentClass>();
+        bool visit = !root.GetVisit();
+        root.SetVisit(visit);
+        q.Enqueue(root);
+        double calcR = 0;
+        double calcV = 0;
+        double calcI = 0;
+        while (q.Count > 0)
+        {
+            ComponentClass cur = q.Dequeue();
+            Debug.Log("cur : " + cur.transform.parent.name);
+            if (cur.GetRootParallel() == null)
+            {
+                calcR = entireR;
+                calcV = entireV;
+            }
+            else
+            {
+                calcR = cur.GetRootParallel().GetR();
+                calcV = cur.GetRootParallel().GetV();
+            }
+            calcI = calcV / calcR;
+            cur.SetV(calcI * cur.GetR());
+            cur.SetI(cur.GetV() / cur.GetR());
+            if (cur.IsParallel())
+            {
+                Parallel parallel = cur.gameObject.GetComponent<Parallel>();
+                for (int i = 0; i < parallel.GetInnerStart().Count; i++)
+                {
+                    if (parallel.GetInnerStart()[i].GetVisit() != visit)
+                    {
+                        parallel.GetInnerStart()[i].SetVisit(visit);
+                        q.Enqueue(parallel.GetInnerStart()[i]);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cur.plus.links.Count; i++)
+                {
+                    if (cur.plus.links[i].GetComponent().GetVisit() != visit)
+                    {
+                        cur.plus.links[i].GetComponent().SetVisit(visit);
+                        q.Enqueue(cur.plus.links[i].GetComponent());
+                    }
+                }
+            }
+            
+        }
+
     }
     // 회로의 각 부품의 전압, 전류, 저항을 초기화 하는 함수 (BFS)
     // 건전지는 전압을 제외하고 전부 0으로 초기화, 그외의 부품은 저항을 제외하고 전부 0으로 초기화
@@ -173,13 +245,16 @@ public class Circuit : MonoBehaviour
     // 계산과 관련된 함수를 모두 호출하는 함수
     public bool circuit(ComponentClass root, ref bool success)
     {
-        ComponentClass next = null;
         double r = 0;
         double v = 0;
         double i = 0;
-        // 방문을 했는지 확인하기 위한 값 : true, false 로 고정되어 있다면 순회마다 매번 초기화 시켜줘야함
-        bool visit = !root.GetVisit();
-
+        Debug.Log("???");
+        success = findParallel(root);
+        if (!success)
+        {
+            Debug.Log("회로에 문제 있음");
+            return false;
+        }
         r = calcEntireR(root, ref success);
 
         if (success)
@@ -191,10 +266,7 @@ public class Circuit : MonoBehaviour
             Debug.Log("CircuitManager Error : 저항 구하기 실패");
             return false;
         }
-
-        visit = !root.GetVisit();
-        next = null;
-       // v = calcEntireV(root, visit, ref success);
+        v = calcEntireV(root, ref success);
         if (success)
         {
             Debug.Log("전체 전압 : " + v);
@@ -207,12 +279,10 @@ public class Circuit : MonoBehaviour
         i = v / r;
         Debug.Log("전체 전류 : " + i);
 
-        visit = !root.GetVisit();
         //calcComponent(root, root, r, v, ref success, visit);
-        //calcComponentManager(root, visit, r, v);
-        parallelRs.Clear();
-        visit = !root.GetVisit();
-        clearComponent(root, visit);
+        calcComponent(root, r, v);
+        //visit = !root.GetVisit();
+        //clearComponent(root, visit);
         return success;
 
     }
@@ -423,21 +493,24 @@ public class Circuit : MonoBehaviour
     }
     public void calc(ComponentClass root)
     {
+        /*        Debug.Log("calc 시작");
+                bool success = true;
+                bool visit = root.GetVisit();
+                ComponentClass start = findStartingPoint(root, ref success, visit);
+                circuit(start, ref success);
+                //success 가 false 면 회로가 중간에 끊겨 있다는 것이고 시작점이 만들어지지 않았음
+                if (success)
+                {
+                    // 모든 순회가 끝나면 만들었던 시작점 제거
+                    Destroy(start.plus.links[0].GetComponent().transform.gameObject);
+                    Destroy(start.minus.links[0].GetComponent().transform.gameObject);
+                    Destroy(start.plus.links[0].GetComponent().plus.links[0].GetComponent().transform.gameObject);
+                    Destroy(start.minus.links[0].GetComponent().minus.links[0].GetComponent().transform.gameObject);
+                    Destroy(start.transform.gameObject);
+                }*/
         Debug.Log("calc 시작");
         bool success = true;
-        bool visit = root.GetVisit();
-        ComponentClass start = findStartingPoint(root, ref success, visit);
-        circuit(start, ref success);
-        //success 가 false 면 회로가 중간에 끊겨 있다는 것이고 시작점이 만들어지지 않았음
-        if (success)
-        {
-            // 모든 순회가 끝나면 만들었던 시작점 제거
-            Destroy(start.plus.links[0].GetComponent().transform.gameObject);
-            Destroy(start.minus.links[0].GetComponent().transform.gameObject);
-            Destroy(start.plus.links[0].GetComponent().plus.links[0].GetComponent().transform.gameObject);
-            Destroy(start.minus.links[0].GetComponent().minus.links[0].GetComponent().transform.gameObject);
-            Destroy(start.transform.gameObject);
-        }
+        circuit(root, ref success);
 
 
     }

@@ -26,10 +26,9 @@ public class PlusAttachment : Attachment
             return;
         }
         links.Add(obj.GetComponent<MinusAttachment>());
-        linkSize++;
         // + 극에 여러 - 극이 달라붙었다면 병렬을 의미
         // 특히 + 극은 병렬의 시작을 의미함
-        if (linkSize > 1)
+        if (links.Count > 1)
         {
             isStartOfParallel = true;
         }
@@ -42,10 +41,9 @@ public class PlusAttachment : Attachment
             return;
         }
         links.Remove(obj.GetComponent<MinusAttachment>());
-        linkSize--;
 
         // 연결된 것이 1개 이하면 더이상 병렬이 아님 
-        if (linkSize <= 1)
+        if (links.Count <= 1)
         {
             isStartOfParallel = false;
             isEndOfParallel = false;
