@@ -6,20 +6,31 @@ public class Parallel : ComponentClass
 {
     public List<ComponentClass> innerStart = new List<ComponentClass>();
     public List<ComponentClass> innerEnd = new List<ComponentClass>();
-
+    public struct Branch
+    {
+        public double resist;
+        public List<ComponentClass> components;
+    }
+    private List<Branch> branches = new List<Branch>();
     private double calcSerialR(ComponentClass start)
     {
         double result = 0;
         ComponentClass cur = start;
+        Branch branch = new Branch();
+        List<ComponentClass> components = new List<ComponentClass>();
+        branch.components = components;
         while (true)
         {
             result += cur.GetR();
+            branch.components.Add(cur);
             if (innerEnd.Contains(cur))
             {
                 break;
             }
             cur = cur.plus.links[0].GetComponent();
         }
+        branch.resist = result;
+        branches.Add(branch);
         return result;
     }
     public void calcR()
@@ -82,7 +93,9 @@ public class Parallel : ComponentClass
     }
     public void DeleteParallel()
     {
-        for(int i=0; i < innerStart.Count; i++)
+        minus.links[0].links.Remove(this.minus);
+        plus.links[0].links.Remove(this.plus);
+        for (int i=0; i < innerStart.Count; i++)
         {
             minus.links[0].links.Add(innerStart[i].minus);
         }
@@ -90,7 +103,8 @@ public class Parallel : ComponentClass
         {
             plus.links[0].links.Add(innerEnd[i].plus);
         }
-        Destroy(transform.parent);
+
+        Destroy(this.gameObject);
     }
     public void SetInnerStart(ComponentClass item)
     {
@@ -100,6 +114,7 @@ public class Parallel : ComponentClass
     {
         innerEnd.Add(item);
     }
+    
     public List<ComponentClass> GetInnerStart()
     {
         return innerStart;
@@ -108,8 +123,13 @@ public class Parallel : ComponentClass
     {
         return innerEnd;
     }
+    public List<Branch> GetBranches()
+    {
+        return branches;
+    }
     public override bool IsParallel()
     {
         return true;
     }
+
 }
