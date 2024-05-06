@@ -22,6 +22,7 @@ public class Circuit : MonoBehaviour
     [SerializeField] private GameObject parallelComponent;
     [SerializeField] private Camera cam;
 
+    // 병렬의 시작과 끝을 맞추는 함수
     public void findPair(ComponentClass start)
     {
         ComponentClass node = start.plus.links[0].GetComponent();
@@ -84,7 +85,7 @@ public class Circuit : MonoBehaviour
         }
         return true;
     }
-    // 병렬을 하나의 저항으로 만드는 함수
+    // 병렬을 하나의 저항(Parallel 부품)으로 만드는 함수
     public void createParallelComponent(ComponentClass start, ComponentClass end)
     {
         Debug.Log("createParallelComponent 시작");
@@ -116,6 +117,7 @@ public class Circuit : MonoBehaviour
         node.calcV();
         node.SetVisit(start.GetVisit());
     }
+    // 회로 전체 저항을 계산하는 함수
     public double calcEntireR(ComponentClass root , ref bool success)
     {
         ComponentClass cur = root.plus.links[0].GetComponent();
@@ -132,6 +134,7 @@ public class Circuit : MonoBehaviour
         }
         return result;
     }
+    // 회로 전체 전압을 구하는 함수
     public double calcEntireV(ComponentClass root, ref bool success)
     {
         ComponentClass cur = root.plus.links[0].GetComponent();
@@ -148,6 +151,7 @@ public class Circuit : MonoBehaviour
         }
         return result;
     }
+    // 부품별 전압, 전류 계산하는 함수
     public void calcComponent(ComponentClass root, double entireR, double entireV)
     {
         Debug.Log("calcComponent 시작");
@@ -161,11 +165,13 @@ public class Circuit : MonoBehaviour
         while (q.Count > 0)
         {
             ComponentClass cur = q.Dequeue();
+            // 병렬에 속하지 않는 부품은 전체 회로의 저항과 전압으로 계산
             if (cur.GetRootParallel() == null)
             {
                 calcR = entireR;
                 calcV = entireV;
             }
+            // 병렬에 속하는 부품은 병렬 가지의 저항과 병렬 회로에 걸리는 전압으로 계산
             else
             {
                 Parallel parallel = cur.GetRootParallel().GetComponent<Parallel>();
@@ -212,7 +218,7 @@ public class Circuit : MonoBehaviour
         }
 
     }
-    // 회로의 각 부품의 전압, 전류, 저항을 초기화 하는 함수 (BFS)
+    // 회로의 각 부품의 전압, 전류, 저항을 초기화 하는 함수 (BFS) + Parallel 부품 삭제
     // 건전지는 전압을 제외하고 전부 0으로 초기화, 그외의 부품은 저항을 제외하고 전부 0으로 초기화
     public void clearComponent(ComponentClass root)
     {

@@ -103,7 +103,13 @@ public class Parallel : ComponentClass
         {
             plus.links[0].links.Add(innerEnd[i].plus);
         }
-
+        for(int i=0; i < branches.Count; i++)
+        {
+            for(int j=0; j < branches[i].components.Count; j++)
+            {
+                branches[i].components[j].SetRootParallel(null);
+            }
+        }
         Destroy(this.gameObject);
     }
     public void SetInnerStart(ComponentClass item)
