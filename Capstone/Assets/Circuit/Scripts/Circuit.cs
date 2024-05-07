@@ -21,6 +21,7 @@ public class Circuit : MonoBehaviour
     [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
     [SerializeField] private Camera cam;
+    public List<Parallel> parallels = new List<Parallel>(); 
 
     // 병렬의 시작과 끝을 맞추는 함수
     public void findPair(ComponentClass start)
@@ -81,12 +82,13 @@ public class Circuit : MonoBehaviour
         {
             ComponentClass start = pairs[i].start;
             ComponentClass end = pairs[i].end;
-            createParallelComponent(start, end);
+            Parallel tmp = createParallelComponent(start, end);
+            parallels.Add(tmp);
         }
         return true;
     }
     // 병렬을 하나의 저항(Parallel 부품)으로 만드는 함수
-    public void createParallelComponent(ComponentClass start, ComponentClass end)
+    public Parallel createParallelComponent(ComponentClass start, ComponentClass end)
     {
         Debug.Log("createParallelComponent 시작");
         GameObject parallel = Instantiate(parallelComponent);
@@ -116,6 +118,8 @@ public class Circuit : MonoBehaviour
         node.calcR();
         node.calcV();
         node.SetVisit(start.GetVisit());
+
+        return node;
     }
     // 회로 전체 저항을 계산하는 함수
     public double calcEntireR(ComponentClass root , ref bool success)
@@ -227,6 +231,13 @@ public class Circuit : MonoBehaviour
         bool visit = !root.GetVisit();
         root.SetVisit(visit);
         q.Enqueue(root);
+        // Parallel 부품 없애는 부분
+        int count = parallels.Count;
+        for(int i= 0; i < count; i++)
+        {
+            parallels[i].DeleteParallel();
+        }
+        parallels.Clear();
         while (q.Count > 0)
         {
             ComponentClass cur = q.Dequeue();
@@ -236,25 +247,8 @@ public class Circuit : MonoBehaviour
             cur.SetShowR(prevR);
             cur.SetShowI(prevI);
             cur.SetShowV(prevV);
-            int count = cur.plus.links.Count;
-            //Debug.Log("count : " + count);
-            for (int i = 0; i < cur.plus.links.Count; i++)
-            {
-
-                ComponentClass tmp = cur.plus.links[i].GetComponent();
-                if (tmp.IsParallel())
-                {
-                    Debug.Log("Parallel 삭제");
-                    //Debug.Log("삭제 전 cur.plus.links.Count : " + cur.plus.links.Count);
-                    //Debug.Log("삭제 전 cur.plus.links.link[i] : " + tmp.gameObject.name);
-                    Parallel parallel = tmp.gameObject.GetComponent<Parallel>();
-                    parallel.DeleteParallel();
-                    //Debug.Log("삭제 후 cur.plus.links.Count : " + cur.plus.links.Count);
-                    //Debug.Log("삭제 후 cur.plus.links.link[i] : " + cur.plus.links[i].GetComponent().transform.parent.gameObject.name);
-                    //cur.plus.links.Remove(tmp.minus);
-                }
-            }
-            count = cur.plus.links.Count;
+            cur.SetPairOfEnd(null);
+            cur.SetPairOfStart(null);
             //Debug.Log("count : " + count);
             for (int i = 0; i < cur.plus.links.Count; i++)
             {
@@ -264,7 +258,6 @@ public class Circuit : MonoBehaviour
                     tmp.SetVisit(visit);
                     q.Enqueue(tmp);
                 }
-
             }
 
             if (cur.gameObject.GetComponent<Power>() != null)
