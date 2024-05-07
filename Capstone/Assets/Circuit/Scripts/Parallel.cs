@@ -69,7 +69,7 @@ public class Parallel : ComponentClass
                 max = tmp;
             }
         }
-        SetV(result);
+        SetV(max);
     }
     private void setSerialRoot(ComponentClass start)
     {
