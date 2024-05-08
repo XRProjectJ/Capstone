@@ -194,11 +194,13 @@ public class Circuit : MonoBehaviour
                 calcV = cur.GetRootParallel().GetV();
             }
             calcI = calcV / calcR;
-            if(cur.gameObject.GetComponent<Power>() == null)
+            
+            if (cur.gameObject.GetComponent<Power>() == null)
             {
                 cur.SetV(calcI * cur.GetR());
                 cur.SetI(cur.GetV() / cur.GetR());
             }
+            cur.Do(entireV / entireR);
             // Parallel 부품인 경우 내부도 순회 해야함
             if (cur.IsParallel())
             {
