@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -685,7 +685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &81121066
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2726,38 +2726,6 @@ MonoBehaviour:
   _headPoseRelativeOffsetRotation: {x: 0, y: 0, z: 0}
   _headPoseRelativeOffsetTranslation: {x: 0, y: 0, z: 0}
   profilerTcpPort: 32419
-  expandMixedRealityCapturePropertySheet: 0
-  enableMixedReality: 0
-  compositionMethod: 0
-  extraHiddenLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  extraVisibleLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  dynamicCullingMask: 1
-  externalCompositionBackdropColorRift: {r: 0, g: 1, b: 0, a: 1}
-  externalCompositionBackdropColorQuest: {r: 0, g: 0, b: 0, a: 0}
-  capturingCameraDevice: 0
-  flipCameraFrameHorizontally: 0
-  flipCameraFrameVertically: 0
-  handPoseStateLatency: 0
-  sandwichCompositionRenderLatency: 0
-  sandwichCompositionBufferedFrames: 8
-  chromaKeyColor: {r: 0, g: 1, b: 0, a: 1}
-  chromaKeySimilarity: 0.6
-  chromaKeySmoothRange: 0.03
-  chromaKeySpillRange: 0.06
-  useDynamicLighting: 0
-  depthQuality: 1
-  dynamicLightingSmoothFactor: 8
-  dynamicLightingDepthVariationClampingValue: 0.001
-  virtualGreenScreenType: 0
-  virtualGreenScreenTopY: 10
-  virtualGreenScreenBottomY: -10
-  virtualGreenScreenApplyDepthCulling: 0
-  virtualGreenScreenDepthTolerance: 0.2
-  mrcActivationMode: 0
   launchSimultaneousHandsControllersOnStartup: 0
   isInsightPassthroughEnabled: 1
   requestBodyTrackingPermissionOnStartup: 0
@@ -5199,7 +5167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -100}
+  m_AnchoredPosition: {x: 100, y: -150}
   m_SizeDelta: {x: 100, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &673873772
@@ -7013,8 +6981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_AnchoredPosition: {x: 0, y: 30}
+  m_SizeDelta: {x: 700, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879232602
 MonoBehaviour:
@@ -7036,7 +7004,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ~explain~
+  m_text: "<\uC124\uBA85>\n\n\uBCF8 \uD504\uB85C\uADF8\uB7A8\uC740 \uD604\uC2E4\uC5D0\uC11C
+    \uC81C\uC2DC\uB418\uB294 \uD68C\uB85C\uB3C4\uB97C \uBC14\uD0D5\uC73C\uB85C \uAC00\uC0C1\uD658\uACBD\uC5D0\uC11C
+    \uC81C\uC791\uD558\uC5EC\n \uC2E4\uD5D8\uD574\uBCF4\uB294 \uAC83\uC744 \uBAA9\uC801\uC73C\uB85C
+    \uD569\uB2C8\uB2E4.\n\n\uBD80\uD488\uC740 ITEM\uBC84\uD2BC\uC744 \uB20C\uB7EC
+    \uC804\uC9C0, LED, \uC804\uC120\uC744 \uC0DD\uC131\uD558\uC5EC \uC0AC\uC6A9\uD560
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n\uBD80\uD488\uB4E4\uC740 \uC778\uC2DD\uB41C
+    \uD14C\uC774\uBE14 \uC704\uC5D0 \uC0DD\uC131\uB418\uBA70, \n\uD074\uB9AD\uD558\uBA74
+    \uAC01 \uBD80\uD488\uC758 \uC804\uB958\uAC12\uACFC \uC804\uC555\uAC12\uC744 \uD655\uC778\uD560
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n\n\uD68C\uB85C\uB3C4\uB97C \uC644\uC131\uD588\uB2E4\uBA74
+    START\uBC84\uD2BC\uC744 \uB20C\uB7EC \n\uAC01\uAC01\uC758 \uC804\uB958\uAC12,
+    \uC804\uC555\uAC12, \uCD1D \uC804\uB958\uAC12 \uB4F1\uC744 \uD655\uC778\uD558\uC138\uC694.\n\n\uC704
+    \uC124\uBA85\uC744 \uBAA8\uB450 \uC778\uC9C0\uD558\uC600\uB2E4\uBA74 \uC544\uB798\uC758
+    OK\uBC84\uD2BC\uC744 \uB20C\uB7EC \uD68C\uB85C\uB3C4 \uB9CC\uB4E4\uAE30\uB97C
+    \uC2DC\uC791\uD558\uC138\uC694."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1549e046280094b8e8056a6a1ace023c, type: 2}
   m_sharedMaterial: {fileID: -7288612530578748352, guid: 1549e046280094b8e8056a6a1ace023c, type: 2}
@@ -7045,8 +7026,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278193151
-  m_fontColor: {r: 1, g: 0.043974813, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7063,8 +7044,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -11106,7 +11087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -100}
+  m_AnchoredPosition: {x: -100, y: -150}
   m_SizeDelta: {x: 100, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1390429457
@@ -15399,7 +15380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1917757536
 RectTransform:
   m_ObjectHideFlags: 0
