@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 7357175732524320204}
   - component: {fileID: 2650244585962715515}
   - component: {fileID: 7135675831496931349}
-  - component: {fileID: 6346297160715933628}
   m_Layer: 5
   m_Name: Voltage
   m_TagString: Untagged
@@ -254,20 +253,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &6346297160715933628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229010843067811493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13cbcd68a32344b19a34572636a9b8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maintext: {fileID: 7135675831496931349}
-  LED_BLUE: {fileID: 0}
 --- !u!1 &3011627339793365273
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plus: {fileID: 8942716475570839034}
   minus: {fileID: 7924953281119628872}
+  rootParallel: {fileID: 0}
   R: 0
   V: 7.5
   I: 0
@@ -537,7 +523,6 @@ GameObject:
   - component: {fileID: 2534829500335124372}
   - component: {fileID: 4318053204690409516}
   - component: {fileID: 3863416625384660635}
-  - component: {fileID: 5377660979812050219}
   m_Layer: 5
   m_Name: Resistance
   m_TagString: Untagged
@@ -661,20 +646,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5377660979812050219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3986292519716336608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b70a6f9b894ba498f8416ff036cc3436, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maintext: {fileID: 3863416625384660635}
-  LED_BLUE: {fileID: 0}
 --- !u!1 &6884222609281299367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,6 +1238,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 3011627339793365273}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: set_tag
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hovering
+          m_BoolArgument: 1
+        m_CallState: 2
   _whenUnhover:
     m_PersistentCalls:
       m_Calls:
@@ -1280,6 +1263,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3011627339793365273}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: set_tag
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Untagged
           m_BoolArgument: 0
         m_CallState: 2
   _whenSelect:
@@ -1311,7 +1306,6 @@ GameObject:
   - component: {fileID: 6849951119806705898}
   - component: {fileID: 3706290339334007962}
   - component: {fileID: 7388880858575976101}
-  - component: {fileID: 7468881470259085234}
   m_Layer: 5
   m_Name: Intense
   m_TagString: Untagged
@@ -1435,20 +1429,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7468881470259085234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7263742091833689134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f8c36c58466a47e595aa39dcd1d21b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maintext: {fileID: 7388880858575976101}
-  LED_BLUE: {fileID: 0}
 --- !u!1 &8419674881422394396
 GameObject:
   m_ObjectHideFlags: 0
