@@ -20,7 +20,7 @@ public class Circuit : MonoBehaviour
     //[SerializeField] private ComponentClass root;
     [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
-    [SerializeField] private Camera cam;
+    //[SerializeField] private Camera cam;
     public List<Parallel> parallels = new List<Parallel>(); 
 
     // 병렬의 시작과 끝을 맞추는 함수
@@ -344,30 +344,51 @@ public class Circuit : MonoBehaviour
         bool success = true;
         circuit(root, ref success);
     }
+
+    private GameObject obj;
+    private ComponentClass root;
     // 회로 부품이 클릭되면 순회시작
     private void click()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameObject.FindWithTag("Hovering") != null)
         {
-
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-
-                GameObject obj = hit.transform.gameObject;
-                Debug.Log("obj.name : " + obj.transform.name);
-                ComponentClass root = obj.GetComponentInChildren<ComponentClass>();
-                if (root)
-                {
-                    Debug.Log("click");
-                    calc(root);
-                }
-            }
+            obj = GameObject.FindWithTag("Hovering");
+            Debug.Log("obj.name : " + obj.transform.name);
+            root = obj.GetComponentInChildren<ComponentClass>();
+            
         }
 
-
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //
+        //    RaycastHit hit;
+        //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        //    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        //    {
+        //
+        //        obj = hit.transform.gameObject;
+        //        Debug.Log("obj.name : " + obj.transform.name);
+        //        root = obj.GetComponentInChildren<ComponentClass>();
+        //        if (root)
+        //        {
+        //            Debug.Log("click");
+        //            calc(root);
+        //        }
+        //    }
+        //}
     }
+
+    public void circuitStart()
+    {
+        if (root)
+        {
+            Debug.Log("start");
+            calc(root);
+        }
+    }
+
+
+
     void Start()
     {
 
