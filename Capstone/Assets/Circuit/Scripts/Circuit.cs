@@ -330,7 +330,7 @@ public class Circuit : MonoBehaviour
         if (success)
         {
             Debug.Log("전체 저항 : " + r);
-            //Rt.text = "R = " + r;
+            Rt.text = "R = " + r;
         }
         else
         {
@@ -341,7 +341,7 @@ public class Circuit : MonoBehaviour
         if (success)
         {
             Debug.Log("전체 전압 : " + v);
-            //Vt.text = "V = " + v;
+            Vt.text = "V = " + v;
         }
         else
         {
@@ -350,7 +350,7 @@ public class Circuit : MonoBehaviour
         }
         i = v / r;
         Debug.Log("전체 전류 : " + i);
-        //It.text = "I = " + i;
+        It.text = "I = " + i;
 
         calcComponent(startingComponent, r, v);
         clearComponent(startingComponent);
