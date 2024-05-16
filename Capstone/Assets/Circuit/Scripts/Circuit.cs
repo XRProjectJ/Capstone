@@ -8,12 +8,13 @@ using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // 순회를 담당하는 스크립트
 
 public class Circuit : MonoBehaviour
 {
-    public Text Rt,Vt,It;
+    public TextMeshProUGUI Rt,Vt,It;
 
     struct ParallelPair
     {
@@ -24,7 +25,9 @@ public class Circuit : MonoBehaviour
     [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
     //[SerializeField] private Camera cam;
-    public List<Parallel> parallels = new List<Parallel>(); 
+    public List<Parallel> parallels = new List<Parallel>();
+
+    public GameObject resultPanel;
 
     // 병렬의 시작과 끝을 맞추는 함수
     public void findPair(ComponentClass start)
@@ -316,7 +319,7 @@ public class Circuit : MonoBehaviour
 
         if (success)
         {
-            //Debug.Log("전체 저항 : " + r);
+            Debug.Log("전체 저항 : " + r);
             Rt.text = "R = " + r;
         }
         else
@@ -327,7 +330,7 @@ public class Circuit : MonoBehaviour
         v = calcEntireV(startingComponent, ref success);
         if (success)
         {
-            //Debug.Log("전체 전압 : " + v);
+            Debug.Log("전체 전압 : " + v);
             Vt.text = "V = " + v;
         }
         else
@@ -336,7 +339,7 @@ public class Circuit : MonoBehaviour
             return false;
         }
         i = v / r;
-        //Debug.Log("전체 전류 : " + i);
+        Debug.Log("전체 전류 : " + i);
         It.text = "I = " + i;
 
         calcComponent(startingComponent, r, v);
@@ -388,8 +391,9 @@ public class Circuit : MonoBehaviour
     {
         if (root)
         {
-            Debug.Log("start");
             calc(root);
+            Debug.Log("start");
+            resultPanel.SetActive(true);
         }
     }
 
