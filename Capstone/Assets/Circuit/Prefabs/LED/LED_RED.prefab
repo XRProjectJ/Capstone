@@ -50,9 +50,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plus: {fileID: 6916948324554119321}
   minus: {fileID: 6780430421181839758}
+  rootParallel: {fileID: 0}
   R: 5
   V: 0
   I: 0
+  showR: 0
+  showV: 0
+  showI: 0
+  visit: 0
+  findVisit: 0
   material: {fileID: 2518891685867812529}
 --- !u!1 &1659174528771498906
 GameObject:
@@ -784,6 +790,7 @@ MonoBehaviour:
   component: {fileID: 536372257398313013}
   links: []
   pair: {fileID: 6916948324554119321}
+  isEndOfParallel: 0
 --- !u!54 &5975326014345318742
 Rigidbody:
   m_ObjectHideFlags: 0
