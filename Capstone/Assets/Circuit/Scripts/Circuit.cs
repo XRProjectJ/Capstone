@@ -24,7 +24,7 @@ public class Circuit : MonoBehaviour
     //[SerializeField] private ComponentClass root;
     [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
-    //[SerializeField] private Camera cam;
+    [SerializeField] private Camera cam;
     public List<Parallel> parallels = new List<Parallel>();
 
     public GameObject resultPanel;
@@ -144,6 +144,11 @@ public class Circuit : MonoBehaviour
                 return 0;
             }
             result += cur.GetR();
+            if(cur.plus.links.Count == 0)
+            {
+                success = false;
+                break;
+            }
             cur = cur.plus.links[0].GetComponent();
         }
         return result;
@@ -161,6 +166,11 @@ public class Circuit : MonoBehaviour
                 return 0;
             }
             result += cur.GetV();
+            if (cur.plus.links.Count == 0)
+            {
+                success = false;
+                break;
+            }
             cur = cur.plus.links[0].GetComponent();
         }
         return result;
@@ -320,7 +330,7 @@ public class Circuit : MonoBehaviour
         if (success)
         {
             Debug.Log("전체 저항 : " + r);
-            Rt.text = "R = " + r;
+            //Rt.text = "R = " + r;
         }
         else
         {
@@ -331,7 +341,7 @@ public class Circuit : MonoBehaviour
         if (success)
         {
             Debug.Log("전체 전압 : " + v);
-            Vt.text = "V = " + v;
+            //Vt.text = "V = " + v;
         }
         else
         {
@@ -340,7 +350,7 @@ public class Circuit : MonoBehaviour
         }
         i = v / r;
         Debug.Log("전체 전류 : " + i);
-        It.text = "I = " + i;
+        //It.text = "I = " + i;
 
         calcComponent(startingComponent, r, v);
         clearComponent(startingComponent);
@@ -367,24 +377,24 @@ public class Circuit : MonoBehaviour
             
         }
 
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //
-        //    RaycastHit hit;
-        //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        //    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-        //    {
-        //
-        //        obj = hit.transform.gameObject;
-        //        Debug.Log("obj.name : " + obj.transform.name);
-        //        root = obj.GetComponentInChildren<ComponentClass>();
-        //        if (root)
-        //        {
-        //            Debug.Log("click");
-        //            calc(root);
-        //        }
-        //    }
-        //}
+        if (Input.GetMouseButtonDown(0))
+        {
+        
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+        
+                obj = hit.transform.gameObject;
+                Debug.Log("obj.name : " + obj.transform.name);
+                root = obj.GetComponentInChildren<ComponentClass>();
+                if (root)
+                {
+                    Debug.Log("click");
+                    calc(root);
+                }
+            }
+        }
     }
 
     public void circuitStart()
