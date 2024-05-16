@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 순회를 담당하는 스크립트
 
 public class Circuit : MonoBehaviour
 {
+    public Text Rt,Vt,It;
+
     struct ParallelPair
     {
         public ComponentClass start;
@@ -313,7 +316,8 @@ public class Circuit : MonoBehaviour
 
         if (success)
         {
-            Debug.Log("전체 저항 : " + r);
+            //Debug.Log("전체 저항 : " + r);
+            Rt.text = "R = " + r;
         }
         else
         {
@@ -323,7 +327,8 @@ public class Circuit : MonoBehaviour
         v = calcEntireV(startingComponent, ref success);
         if (success)
         {
-            Debug.Log("전체 전압 : " + v);
+            //Debug.Log("전체 전압 : " + v);
+            Vt.text = "V = " + v;
         }
         else
         {
@@ -331,7 +336,8 @@ public class Circuit : MonoBehaviour
             return false;
         }
         i = v / r;
-        Debug.Log("전체 전류 : " + i);
+        //Debug.Log("전체 전류 : " + i);
+        It.text = "I = " + i;
 
         calcComponent(startingComponent, r, v);
         clearComponent(startingComponent);
