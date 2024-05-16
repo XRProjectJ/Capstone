@@ -24,7 +24,7 @@ public class Circuit : MonoBehaviour
     //[SerializeField] private ComponentClass root;
     [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
-    [SerializeField] private Camera cam;
+    //[SerializeField] private Camera cam;
     public List<Parallel> parallels = new List<Parallel>();
 
     public GameObject resultPanel;
@@ -377,7 +377,7 @@ public class Circuit : MonoBehaviour
             
         }
 
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
         
             RaycastHit hit;
@@ -394,7 +394,7 @@ public class Circuit : MonoBehaviour
                     calc(root);
                 }
             }
-        }
+        }*/
     }
 
     public void circuitStart()
