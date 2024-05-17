@@ -11,8 +11,9 @@ public class DrawLine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lineRenderer.SetWidth(0.005f, 0.005f);
-        
+        lineRenderer.startWidth = 0.4f;
+        lineRenderer.endWidth = 0.4f;
+
     }
     private void Draw()
     {

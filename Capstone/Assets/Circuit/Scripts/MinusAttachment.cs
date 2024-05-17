@@ -31,6 +31,9 @@ public class MinusAttachment : Attachment
             }
             isEndOfParallel = true;
         }
+
+
+
     }
     private void OnTriggerExit(Collider other)
     {
