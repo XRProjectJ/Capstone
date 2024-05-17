@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using Oculus.Interaction;
 
 // ???? ???? ???????? ?????? ??????
 public class ComponentClass : MonoBehaviour
@@ -25,9 +26,13 @@ public class ComponentClass : MonoBehaviour
     public double showR = 0;
     public double showV = 0;
     public double showI = 0;
+
+    private bool grab = false;
     // ???? ?? ?????? ?????? ???????? ???? ????
     public bool visit = false;
     public bool findVisit = false;
+
+    
 
     // ?????? ?????? ?????? ????
     public virtual void Do(double totalCurrent)
@@ -40,6 +45,18 @@ public class ComponentClass : MonoBehaviour
         return false;
     }
     // Getter, Setter
+    public void SetGrab(bool value)
+    {
+        grab = value;
+    }
+    public void doGrab()
+    {
+        grab = true;
+    }
+    public void doNotGrab()
+    {
+        grab = false;
+    }
     public void SetR(double R)
     {
         this.R = R;
@@ -127,5 +144,9 @@ public class ComponentClass : MonoBehaviour
     public ComponentClass GetPairOfEnd()
     {
         return pairOfEnd;
+    }
+    public bool GetGrab()
+    {
+        return grab;
     }
 }

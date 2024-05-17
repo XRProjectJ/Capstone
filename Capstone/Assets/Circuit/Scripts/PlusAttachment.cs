@@ -16,6 +16,7 @@ public class PlusAttachment : Attachment
     public bool isStartOfParallel = false;
     // 병렬의 끝이라면 병렬의 끝이 어디로 이어지는 지 저장
     public MinusAttachment endOfParallelLink = null;
+    
 
 
     private void OnTriggerEnter(Collider other)
@@ -31,6 +32,11 @@ public class PlusAttachment : Attachment
         if (links.Count > 1)
         {
             isStartOfParallel = true;
+        }
+        if (other.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true && other.GetComponent<Line>() != null)
+        {
+            Vector3 newPos = other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition - this.transform.localPosition;
+            other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition += newPos;
         }
     }
     private void OnTriggerExit(Collider other)
