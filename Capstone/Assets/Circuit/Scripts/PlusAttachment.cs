@@ -33,11 +33,11 @@ public class PlusAttachment : Attachment
         {
             isStartOfParallel = true;
         }
-        if (other.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true && other.GetComponent<Line>() != null)
-        {
-            Vector3 newPos = other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition - this.transform.localPosition;
-            other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition += newPos;
-        }
+        //if (other.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true && other.GetComponent<Line>() != null)
+        //{
+        //    Vector3 newPos = other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition - this.transform.localPosition;
+        //    other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition += newPos;
+        //}
     }
     private void OnTriggerExit(Collider other)
     {

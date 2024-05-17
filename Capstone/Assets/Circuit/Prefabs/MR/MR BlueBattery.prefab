@@ -304,10 +304,10 @@ MonoBehaviour:
   minus: {fileID: 7924953281119628872}
   rootParallel: {fileID: 0}
   R: 0
-  V: 7.5
+  V: 1.5
   I: 0
   showR: 0
-  showV: 0
+  showV: 1.5
   showI: 0
   visit: 0
   findVisit: 0
