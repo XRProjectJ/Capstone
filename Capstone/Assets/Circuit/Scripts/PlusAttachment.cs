@@ -11,11 +11,11 @@ public class PlusAttachment : Attachment
     // 해당 객체를 가진 부품의 - 극을 저장 (24.04.01 기준 사용안함)
     [SerializeField] protected MinusAttachment pair;
     // 병렬의 끝인지 저장
-    public bool isEndOfParallel = false;
+    private bool isEndOfParallel = false;
     // 병렬의 시작인지 저장
-    public bool isStartOfParallel = false;
+    private bool isStartOfParallel = false;
     // 병렬의 끝이라면 병렬의 끝이 어디로 이어지는 지 저장
-    public MinusAttachment endOfParallelLink = null;
+    private MinusAttachment endOfParallelLink = null;
     
 
 
@@ -33,11 +33,13 @@ public class PlusAttachment : Attachment
         {
             isStartOfParallel = true;
         }
-        //if (other.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true && other.GetComponent<Line>() != null)
-        //{
-        //    Vector3 newPos = other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition - this.transform.localPosition;
-        //    other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition += newPos;
-        //}
+        if (obj.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true)
+        {
+            Vector3 offset = obj.GetComponent<MinusAttachment>().GetOffset();
+            obj.transform.position = this.transform.position;
+            obj.transform.localPosition += offset;
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {

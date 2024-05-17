@@ -9,7 +9,7 @@ public class MinusAttachment : Attachment
     public List<PlusAttachment> links = new List<PlusAttachment>();
     // 해당 객체를 가진 부품의 + 극을 저장 (24.04.01 기준 사용안함)
     [SerializeField] protected PlusAttachment pair;
-    public bool isEndOfParallel = false;
+    private bool isEndOfParallel = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,11 +31,19 @@ public class MinusAttachment : Attachment
             }
             isEndOfParallel = true;
         }
-        //if (other.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true && other.GetComponent<Line>() != null)
-        //{
-        //    Vector3 newPos = other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition - this.transform.localPosition;
-        //    other.GetComponent<MinusAttachment>().GetComponent().transform.localPosition += newPos; 
-        //}
+        if (obj.GetComponent<PlusAttachment>().GetComponent().GetGrab() == true)
+        {
+            /*GameObject model = obj.GetComponent<PlusAttachment>().GetComponent().gameObject.transform.parent.gameObject;
+            Debug.Log("model : " + model);
+            GameObject attachment = obj.GetComponent<PlusAttachment>().gameObject;
+            Debug.Log("attachment : " + attachment);
+            Vector3 offset = attachment.transform.localPosition - model.transform.localPosition;
+            model.transform.localPosition += offset;*/
+            Vector3 offset = obj.GetComponent<PlusAttachment>().GetOffset();
+            obj.transform.position = this.transform.position;
+            obj.transform.localPosition += offset;
+
+        }
 
 
     }

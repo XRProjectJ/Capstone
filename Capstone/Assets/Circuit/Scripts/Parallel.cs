@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Parallel : ComponentClass
 {
-    public List<ComponentClass> innerStart = new List<ComponentClass>();
-    public List<ComponentClass> innerEnd = new List<ComponentClass>();
+    private List<ComponentClass> innerStart = new List<ComponentClass>();
+    private List<ComponentClass> innerEnd = new List<ComponentClass>();
     public struct Branch
     {
         public double resist;
