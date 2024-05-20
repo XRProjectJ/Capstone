@@ -1397,12 +1397,17 @@ PrefabInstance:
     - target: {fileID: 8481286216917438445, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
       propertyPath: material
       value: 
-      objectReference: {fileID: 7752811303384016268}
+      objectReference: {fileID: 70605172126853409}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
+--- !u!1 &70605172126853409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8813382005452684599, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
+  m_PrefabInstance: {fileID: 8842179304201557014}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1082605375237741563 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8481286216917438445, guid: 9273d65073e9a7e41a0850121db00269, type: 3}

@@ -21,8 +21,6 @@ public class Circuit : MonoBehaviour
         public ComponentClass start;
         public ComponentClass end;
     };
-    //[SerializeField] private ComponentClass root;
-    [SerializeField] private GameObject startComponent;
     [SerializeField] private GameObject parallelComponent;
     //[SerializeField] private Camera cam;
     public List<Parallel> parallels = new List<Parallel>();
