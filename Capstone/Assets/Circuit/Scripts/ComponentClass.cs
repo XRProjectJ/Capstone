@@ -44,6 +44,10 @@ public class ComponentClass : MonoBehaviour
     {
         return false;
     }
+    public virtual bool IsLine()
+    {
+        return false;
+    }
     // Getter, Setter
     public void SetGrab(bool value)
     {

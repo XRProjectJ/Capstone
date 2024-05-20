@@ -33,12 +33,12 @@ public class PlusAttachment : Attachment
         {
             isStartOfParallel = true;
         }
-        if (obj.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true)
+/*        if (obj.GetComponent<MinusAttachment>().GetComponent().GetGrab() == true)
         {
             Vector3 offset = obj.GetComponent<MinusAttachment>().GetOffset();
             obj.transform.position = this.transform.position;
             obj.transform.localPosition += offset;
-        }
+        }*/
 
     }
     private void OnTriggerExit(Collider other)

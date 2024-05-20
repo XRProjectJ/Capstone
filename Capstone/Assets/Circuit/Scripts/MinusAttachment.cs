@@ -20,6 +20,7 @@ public class MinusAttachment : Attachment
         }
         links.Add(obj.GetComponent<PlusAttachment>());
 
+
         // 여러 부품들이 달라 붙어있는 경우는 병렬임
         // 특히 - 극에 여러 부품이 달라붙어 있는 경우는 병렬이 끝나는 지점을 의미
         if (links.Count > 1)
@@ -31,19 +32,20 @@ public class MinusAttachment : Attachment
             }
             isEndOfParallel = true;
         }
-        if (obj.GetComponent<PlusAttachment>().GetComponent().GetGrab() == true)
+/*        if (obj.GetComponent<PlusAttachment>().GetComponent().GetGrab() == true)
         {
-            /*GameObject model = obj.GetComponent<PlusAttachment>().GetComponent().gameObject.transform.parent.gameObject;
-            Debug.Log("model : " + model);
-            GameObject attachment = obj.GetComponent<PlusAttachment>().gameObject;
-            Debug.Log("attachment : " + attachment);
-            Vector3 offset = attachment.transform.localPosition - model.transform.localPosition;
-            model.transform.localPosition += offset;*/
+            //GameObject model = obj.GetComponent<PlusAttachment>().GetComponent().gameObject.transform.parent.gameObject;
+            //Debug.Log("model : " + model);
+            //GameObject attachment = obj.GetComponent<PlusAttachment>().gameObject;
+            //Debug.Log("attachment : " + attachment);
+            //Vector3 offset = attachment.transform.localPosition - model.transform.localPosition;
+            //model.transform.localPosition += offset;
+            
             Vector3 offset = obj.GetComponent<PlusAttachment>().GetOffset();
             obj.transform.position = this.transform.position;
             obj.transform.localPosition += offset;
 
-        }
+        }*/
 
 
     }
