@@ -14,8 +14,11 @@ public class GameManager : MonoBehaviour
     public Button CircuitCheckBtn;
 
     public GameObject LED;
+    public GameObject LED_5R;
+    public GameObject LED_7R;
     public GameObject Battery;
-    //public GameObject resister;
+    public GameObject Battery_3V;
+    public GameObject Battery_5V;
     public GameObject MRLine;
 
     public Button ItemBtn;
@@ -23,9 +26,15 @@ public class GameManager : MonoBehaviour
 
     public Button ItemBox_Pressed;
     public GameObject itemPanel;
+
     public Button LEDBtn;
+    public Button LEDBtn_5R;
+    public Button LEDBtn_7R;
     public Button BatteryBtn;
+    public Button BatteryBtn_3V;
+    public Button BatteryBtn_5V;
     public Button MRLineBtn;
+
 
 
 
@@ -88,6 +97,26 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(LED, new Vector3(0, 0, 0), this.transform.rotation);
     }
+    public void createBattery_3V()
+    {
+        Instantiate(Battery_3V, new Vector3(0, 0, 0), this.transform.rotation);
+    }
+    public void createLED_5R()
+    {
+        Instantiate(LED_5R, new Vector3(0, 0, 0), this.transform.rotation);
+    }
+    public void createBattery_5V()
+    {
+        Instantiate(Battery_5V, new Vector3(0, 0, 0), this.transform.rotation);
+    }
+    public void createLED_7R()
+    {
+        Instantiate(LED_7R, new Vector3(0, 0, 0), this.transform.rotation);
+    }
+
+
+
+
     public void circuitCheck()
     {
         Debug.Log("checking...");
@@ -111,6 +140,10 @@ public class GameManager : MonoBehaviour
 
         LEDBtn.onClick.AddListener(createLED);
         BatteryBtn.onClick.AddListener(createBattery);
+        LEDBtn_5R.onClick.AddListener(createLED_5R);
+        BatteryBtn_3V.onClick.AddListener(createBattery_3V);
+        LEDBtn_7R.onClick.AddListener(createLED_7R);
+        BatteryBtn_5V.onClick.AddListener(createBattery_5V);
         MRLineBtn.onClick.AddListener(createLine);
         CircuitCheckBtn.onClick.AddListener(circuitCheck);
 

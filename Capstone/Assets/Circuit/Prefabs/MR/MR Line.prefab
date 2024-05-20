@@ -134,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6016621080077396400, guid: 0b9f73ee671db8b4fb6cdee7b99d6986, type: 3}
       propertyPath: m_Parameters.alignment
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6016621080077396400, guid: 0b9f73ee671db8b4fb6cdee7b99d6986, type: 3}
       propertyPath: m_Positions.Array.data[1].x
