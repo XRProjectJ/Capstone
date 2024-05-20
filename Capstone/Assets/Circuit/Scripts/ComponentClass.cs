@@ -20,9 +20,9 @@ public class ComponentClass : MonoBehaviour
     /*[SerializeField] protected double R = 0;
     [SerializeField] protected double V = 0;
     [SerializeField] protected double I = 0;*/
-    private double R = 0;
-    private double V = 0;
-    private double I = 0;
+    public double R = 0;
+    public double V = 0;
+    public double I = 0;
     private double showR = 0;
     private double showV = 0;
     private double showI = 0;
