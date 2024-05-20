@@ -17346,6 +17346,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1950913816970222337, guid: 023b3fb8f41b8894ca126b76ce117d68, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3230326964101907005, guid: 023b3fb8f41b8894ca126b76ce117d68, type: 3}
       propertyPath: _whenHover.m_PersistentCalls.m_Calls.Array.size
       value: 2

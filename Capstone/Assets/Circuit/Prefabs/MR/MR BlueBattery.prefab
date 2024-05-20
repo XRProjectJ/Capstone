@@ -305,6 +305,9 @@ MonoBehaviour:
   R: 0
   V: 1
   I: 0
+  showR: 0
+  showV: 1
+  showI: 0
 --- !u!1 &3093210047496875584
 GameObject:
   m_ObjectHideFlags: 0

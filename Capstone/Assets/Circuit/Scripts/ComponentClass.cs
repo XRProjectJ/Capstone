@@ -23,9 +23,9 @@ public class ComponentClass : MonoBehaviour
     public double R = 0;
     public double V = 0;
     public double I = 0;
-    private double showR = 0;
-    private double showV = 0;
-    private double showI = 0;
+    public double showR = 0;
+    public double showV = 0;
+    public double showI = 0;
 
     private bool grab = false;
     // ???? ?? ?????? ?????? ???????? ???? ????
