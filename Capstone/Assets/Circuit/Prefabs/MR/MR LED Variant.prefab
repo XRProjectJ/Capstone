@@ -860,9 +860,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8240749116634132180, guid: 7cab184fcd1d83f42bed80f9db3e36ee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5395982402041095540}
-    - targetCorrespondingSourceObject: {fileID: 8240749116634132180, guid: 7cab184fcd1d83f42bed80f9db3e36ee, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 180949446343802475}
   m_SourcePrefab: {fileID: 100100000, guid: 7cab184fcd1d83f42bed80f9db3e36ee, type: 3}
 --- !u!4 &3257404766859073949 stripped
 Transform:
@@ -1265,67 +1262,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.88813895, y: 6.903633, z: 0.881687}
   m_Center: {x: 0.006102234, y: 2.9518166, z: 0.17956755}
---- !u!114 &180949446343802475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5259693798475087436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1464721f2283eb14e94a33e812b47be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactableView: {fileID: 6080885651932058918}
-  _whenHover:
-    m_PersistentCalls:
-      m_Calls: []
-  _whenUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-  _whenSelect:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1082605375237741563}
-        m_TargetAssemblyTypeName: ComponentClass, Assembly-CSharp
-        m_MethodName: doGrab
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _whenUnselect:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1082605375237741563}
-        m_TargetAssemblyTypeName: ComponentClass, Assembly-CSharp
-        m_MethodName: doNotGrab
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _whenInteractorViewAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  _whenInteractorViewRemoved:
-    m_PersistentCalls:
-      m_Calls: []
-  _whenSelectingInteractorViewAdded:
-    m_PersistentCalls:
-      m_Calls: []
-  _whenSelectingInteractorViewRemoved:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &8842179304201557014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1395,17 +1331,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
---- !u!114 &1082605375237741563 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8481286216917438445, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
-  m_PrefabInstance: {fileID: 8842179304201557014}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7752811303384016268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5080ecea16d4cb3418fed70514777c58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2476645259091661883 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6407343020012650541, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
