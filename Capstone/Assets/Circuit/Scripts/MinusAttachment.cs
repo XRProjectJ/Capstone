@@ -32,15 +32,17 @@ public class MinusAttachment : Attachment
             }
             isEndOfParallel = true;
         }
-/*        if (obj.GetComponent<PlusAttachment>().GetComponent().GetGrab() == true)
+        /*Debug.Log("GetGrab() : " + obj.GetComponent<PlusAttachment>().GetComponent().GetGrab());
+        if (obj.GetComponent<PlusAttachment>().GetComponent().GetGrab() == true)
         {
+            Debug.Log("¾îÅÂÄ¡");
             //GameObject model = obj.GetComponent<PlusAttachment>().GetComponent().gameObject.transform.parent.gameObject;
             //Debug.Log("model : " + model);
             //GameObject attachment = obj.GetComponent<PlusAttachment>().gameObject;
             //Debug.Log("attachment : " + attachment);
             //Vector3 offset = attachment.transform.localPosition - model.transform.localPosition;
             //model.transform.localPosition += offset;
-            
+
             Vector3 offset = obj.GetComponent<PlusAttachment>().GetOffset();
             obj.transform.position = this.transform.position;
             obj.transform.localPosition += offset;

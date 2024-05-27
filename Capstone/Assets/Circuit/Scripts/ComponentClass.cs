@@ -55,6 +55,7 @@ public class ComponentClass : MonoBehaviour
     }
     public void doGrab()
     {
+        Debug.Log("doGrab");
         grab = true;
     }
     public void doNotGrab()

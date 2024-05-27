@@ -59,7 +59,7 @@ public class Parallel : ComponentClass
     }
     public void calcV()
     {
-        double result = 0;
+        //double result = 0;
         double max = 0;
         for (int i = 0; i < innerStart.Count; i++)
         {
