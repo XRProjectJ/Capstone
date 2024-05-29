@@ -1260,8 +1260,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.88813895, y: 6.903633, z: 0.881687}
-  m_Center: {x: 0.006102234, y: 2.9518166, z: 0.17956755}
+  m_Size: {x: 0.8881393, y: 6.903633, z: 0.64932775}
+  m_Center: {x: 0.006102234, y: 2.9518166, z: -0.12885302}
 --- !u!1001 &8842179304201557014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1273,6 +1273,14 @@ PrefabInstance:
     - target: {fileID: 1234619579417293210, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
       propertyPath: m_Name
       value: LED_BLUE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292579683960725337, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
+      propertyPath: m_Size.z
+      value: 0.8677872
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292579683960725337, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
+      propertyPath: m_Center.z
+      value: 0.18389352
       objectReference: {fileID: 0}
     - target: {fileID: 1839104828769741305, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1321,6 +1329,14 @@ PrefabInstance:
     - target: {fileID: 6407343020012650541, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366973270531647637, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
+      propertyPath: m_Size.z
+      value: 0.86461323
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366973270531647637, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
+      propertyPath: m_Center.z
+      value: 0.18230645
       objectReference: {fileID: 0}
     - target: {fileID: 8481286216917438445, guid: 9273d65073e9a7e41a0850121db00269, type: 3}
       propertyPath: R

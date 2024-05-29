@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using Oculus.Interaction;
+using System;
 
 // ???? ???? ???????? ?????? ??????
 public class ComponentClass : MonoBehaviour
@@ -108,15 +109,15 @@ public class ComponentClass : MonoBehaviour
     }
     public double GetR()
     {
-        return this.R;
+        return Math.Round(this.R, 2);
     }
     public double GetV()
     {
-        return this.V;
+        return Math.Round(this.V, 2);
     }
     public double GetI() 
     { 
-        return this.I;
+        return Math.Round(this.I, 2);
     }
     public bool GetVisit()
     {
@@ -124,15 +125,15 @@ public class ComponentClass : MonoBehaviour
     }
     public double GetShowR()
     {
-        return showR;
+        return Math.Round(showR, 2);
     }
     public double GetShowV()
     {
-        return showV;
+        return Math.Round(showV, 2);
     }
     public double GetShowI()
     {
-        return showI;
+        return Math.Round(showI, 2);
     }
     public bool GetFindVisit()
     {
