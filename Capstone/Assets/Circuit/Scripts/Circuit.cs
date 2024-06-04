@@ -22,7 +22,7 @@ public class Circuit : MonoBehaviour
         public ComponentClass end;
     }; 
     [SerializeField] private GameObject parallelComponent;
-    //[SerializeField] private Camera cam;
+    [SerializeField] private Camera cam;
     public List<Parallel> parallels = new List<Parallel>();
 
     public GameObject resultPanel;
@@ -93,6 +93,11 @@ public class Circuit : MonoBehaviour
             Parallel tmp = createParallelComponent(start, end);
             parallels.Add(tmp);
         }
+        for(int i=0; i < parallels.Count; i++)
+        {
+            parallels[i].calcR();
+            parallels[i].calcV();
+        }
         return true;
     }
     // 병렬을 하나의 저항(Parallel 부품)으로 만드는 함수
@@ -123,8 +128,6 @@ public class Circuit : MonoBehaviour
         end.minus.links.Add(nodeComponent.plus);
 
         node.SetRoot();
-        node.calcR();
-        node.calcV();
         node.SetVisit(start.GetVisit());
 
         return node;
@@ -372,17 +375,17 @@ public class Circuit : MonoBehaviour
             obj = GameObject.FindWithTag("Hovering");
             Debug.Log("obj.name : " + obj.transform.name);
             root = obj.GetComponentInChildren<ComponentClass>();
-            
+
         }
 
         /*if (Input.GetMouseButtonDown(0))
         {
-        
+
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-        
+
                 obj = hit.transform.gameObject;
                 Debug.Log("obj.name : " + obj.transform.name);
                 root = obj.GetComponentInChildren<ComponentClass>();

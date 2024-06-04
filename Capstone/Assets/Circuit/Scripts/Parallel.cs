@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Parallel : ComponentClass
 {
@@ -21,7 +22,13 @@ public class Parallel : ComponentClass
         branch.components = components;
         while (true)
         {
+            if (cur.IsParallel())
+            {
+                Debug.Log("저항 재설정");
+                cur.GetComponent<Parallel>().calcR();
+            }
             result += cur.GetR();
+
             branch.components.Add(cur);
             if (innerEnd.Contains(cur))
             {
@@ -48,6 +55,10 @@ public class Parallel : ComponentClass
         ComponentClass cur = start;
         while (true)
         {
+            if (cur.IsParallel())
+            {
+                cur.GetComponent<Parallel>().calcV();
+            }
             result += cur.GetV();
             if (innerEnd.Contains(cur))
             {
@@ -137,5 +148,4 @@ public class Parallel : ComponentClass
     {
         return true;
     }
-
 }

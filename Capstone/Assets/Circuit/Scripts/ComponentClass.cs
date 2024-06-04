@@ -107,11 +107,11 @@ public class ComponentClass : MonoBehaviour
     {
         this.rootParallel = root;
     }
-    public double GetR()
+    public virtual double GetR()
     {
         return Math.Round(this.R, 2);
     }
-    public double GetV()
+    public virtual double GetV()
     {
         return Math.Round(this.V, 2);
     }
